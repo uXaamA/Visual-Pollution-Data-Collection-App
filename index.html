@@ -3,172 +3,136 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <meta name="theme-color" content="#0f172a">
+    <meta name="theme-color" content="#1e3a5f">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>VP Collector | Visual Pollution Research</title>
+    <title>VP Collector</title>
     
     <link rel="manifest" href="manifest.json">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <style>
-        :root {
-            --bg-primary: #0f172a;
-            --bg-secondary: #1e293b;
-            --bg-card: #334155;
-            --accent-primary: #06b6d4;
-            --accent-secondary: #8b5cf6;
-            --accent-warning: #f59e0b;
-            --accent-success: #10b981;
-            --accent-danger: #ef4444;
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --text-muted: #64748b;
-            --border-color: #475569;
-            --gradient-1: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%);
-            --shadow-glow: 0 0 40px rgba(6, 182, 212, 0.3);
-            --font-mono: 'JetBrains Mono', monospace;
-            --font-sans: 'Space Grotesk', sans-serif;
-        }
-
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
+        :root {
+            --primary: #1e3a5f;
+            --primary-light: #2d5a8a;
+            --accent: #00b894;
+            --warning: #fdcb6e;
+            --danger: #e74c3c;
+            --bg: #f5f6fa;
+            --card: #ffffff;
+            --text: #2d3436;
+            --text-light: #636e72;
+            --border: #dfe6e9;
+        }
+
         body {
-            font-family: var(--font-sans);
-            background: var(--bg-primary);
-            color: var(--text-primary);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--bg);
+            color: var(--text);
             min-height: 100vh;
             min-height: 100dvh;
         }
 
-        .bg-pattern {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            z-index: 0;
-            opacity: 0.4;
-            background-image: 
-                radial-gradient(circle at 20% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 50%);
-        }
-
-        .app-container {
-            position: relative;
-            z-index: 1;
-            max-width: 480px;
+        .app {
+            max-width: 500px;
             margin: 0 auto;
-            padding: 20px;
-            padding-bottom: 100px;
+            padding-bottom: 80px;
         }
 
+        /* Header */
         .header {
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
+            padding: 20px;
             text-align: center;
-            margin-bottom: 24px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
-        .logo {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            margin-bottom: 8px;
+        .header h1 {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 4px;
         }
 
-        .logo-icon {
-            width: 48px; height: 48px;
-            background: var(--gradient-1);
-            border-radius: 12px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 24px;
-            box-shadow: var(--shadow-glow);
-        }
-
-        .logo-text {
-            font-size: 28px;
-            font-weight: 700;
-            background: var(--gradient-1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        .tagline {
-            font-family: var(--font-mono);
+        .header p {
             font-size: 12px;
-            color: var(--text-muted);
-            letter-spacing: 2px;
-            text-transform: uppercase;
+            opacity: 0.9;
         }
 
-        .connection-status {
+        .status-badge {
             display: inline-flex;
             align-items: center;
-            gap: 8px;
-            margin-top: 12px;
-            padding: 8px 16px;
-            background: var(--bg-secondary);
+            gap: 6px;
+            background: rgba(255,255,255,0.2);
+            padding: 6px 12px;
             border-radius: 20px;
             font-size: 12px;
+            margin-top: 10px;
         }
 
         .status-dot {
-            width: 8px; height: 8px;
+            width: 8px;
+            height: 8px;
             border-radius: 50%;
-            background: var(--accent-warning);
+            background: var(--warning);
         }
-        .status-dot.connected { background: var(--accent-success); }
-        .status-dot.error { background: var(--accent-danger); }
 
-        .status-bar {
+        .status-dot.ok { background: var(--accent); }
+
+        /* Stats */
+        .stats {
             display: flex;
-            gap: 12px;
-            margin-bottom: 20px;
-        }
-
-        .status-item {
-            flex: 1;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
+            background: white;
+            margin: 16px;
             border-radius: 12px;
-            padding: 12px;
-            text-align: center;
-        }
-
-        .status-value {
-            font-family: var(--font-mono);
-            font-size: 20px;
-            font-weight: 600;
-            color: var(--accent-primary);
-        }
-
-        .status-label {
-            font-size: 11px;
-            color: var(--text-muted);
-            text-transform: uppercase;
-        }
-
-        .camera-section {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
             overflow: hidden;
-            margin-bottom: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
         }
 
-        .camera-preview {
-            position: relative;
-            width: 100%;
+        .stat {
+            flex: 1;
+            padding: 16px;
+            text-align: center;
+            border-right: 1px solid var(--border);
+        }
+
+        .stat:last-child { border-right: none; }
+
+        .stat-num {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary);
+        }
+
+        .stat-label {
+            font-size: 11px;
+            color: var(--text-light);
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        /* Camera Section */
+        .camera-box {
+            background: white;
+            margin: 0 16px 16px;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .camera-view {
             aspect-ratio: 4/3;
-            background: var(--bg-primary);
+            background: #2d3436;
             display: flex;
             align-items: center;
             justify-content: center;
+            position: relative;
         }
 
-        .camera-preview img {
+        .camera-view img {
             width: 100%;
             height: 100%;
             object-fit: cover;
@@ -176,954 +140,921 @@
 
         .camera-placeholder {
             text-align: center;
-            padding: 40px;
+            color: white;
         }
 
-        .camera-placeholder-icon { font-size: 64px; opacity: 0.5; }
-        .camera-placeholder-text { color: var(--text-muted); font-size: 14px; margin-top: 12px; }
-
-        .camera-controls {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 24px;
-            padding: 20px;
-            background: var(--bg-card);
-        }
-
-        .capture-btn {
-            width: 72px; height: 72px;
-            border-radius: 50%;
-            background: var(--gradient-1);
-            border: 4px solid var(--text-primary);
-            cursor: pointer;
-            box-shadow: var(--shadow-glow);
-            transition: transform 0.2s;
-        }
-        .capture-btn:active { transform: scale(0.95); }
-
-        .control-btn {
-            width: 48px; height: 48px;
-            border-radius: 50%;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            color: var(--text-primary);
-            font-size: 20px;
-            cursor: pointer;
-        }
-
-        .location-info {
-            padding: 12px 20px;
-            border-top: 1px solid var(--border-color);
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 8px;
-            font-family: var(--font-mono);
-            font-size: 11px;
-            color: var(--text-secondary);
-        }
-
-        .location-info span { color: var(--text-primary); }
-
-        .section-title {
-            font-size: 14px;
-            font-weight: 600;
-            color: var(--text-secondary);
-            text-transform: uppercase;
-            letter-spacing: 1px;
+        .camera-placeholder .icon {
+            font-size: 60px;
             margin-bottom: 12px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
         }
 
-        .section-title::before {
-            content: '';
-            width: 4px; height: 16px;
-            background: var(--gradient-1);
-            border-radius: 2px;
+        .camera-placeholder p {
+            font-size: 16px;
+            opacity: 0.8;
         }
 
-        .category-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin-bottom: 20px;
-        }
-
-        .category-chip {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
-            padding: 12px;
+        .camera-btn {
+            width: 100%;
+            padding: 20px;
+            background: var(--accent);
+            color: white;
+            border: none;
+            font-size: 18px;
+            font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
-            gap: 10px;
-            transition: all 0.2s;
-        }
-
-        .category-chip:hover { border-color: var(--accent-primary); }
-        .category-chip.selected {
-            background: rgba(6, 182, 212, 0.15);
-            border-color: var(--accent-primary);
-        }
-
-        .category-icon {
-            width: 32px; height: 32px;
-            border-radius: 8px;
-            background: var(--bg-card);
-            display: flex;
-            align-items: center;
             justify-content: center;
-            font-size: 16px;
+            gap: 10px;
         }
 
-        .category-text { font-size: 13px; font-weight: 500; }
+        .camera-btn:active {
+            background: #00a884;
+        }
 
-        .score-section {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
+        .camera-btn .icon {
+            font-size: 24px;
+        }
+
+        /* Location Info */
+        .location-bar {
+            display: flex;
+            padding: 12px 16px;
+            background: #f8f9fa;
+            font-size: 12px;
+            color: var(--text-light);
+            gap: 16px;
+        }
+
+        .location-bar span {
+            color: var(--text);
+            font-weight: 500;
+        }
+
+        /* Section */
+        .section {
+            background: white;
+            margin: 0 16px 16px;
             border-radius: 16px;
             padding: 20px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+        }
+
+        .section-title {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .section-title .icon {
+            font-size: 20px;
+        }
+
+        /* Categories - BIG BUTTONS for easy tapping */
+        .categories {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+        }
+
+        .cat-btn {
+            aspect-ratio: 1;
+            background: var(--bg);
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: all 0.2s;
+            padding: 8px;
+        }
+
+        .cat-btn:active {
+            transform: scale(0.95);
+        }
+
+        .cat-btn.selected {
+            background: #e8f5e9;
+            border-color: var(--accent);
+        }
+
+        .cat-btn .icon {
+            font-size: 32px;
+        }
+
+        .cat-btn .label {
+            font-size: 10px;
+            font-weight: 500;
+            text-align: center;
+            line-height: 1.2;
+            color: var(--text-light);
+        }
+
+        .cat-btn.selected .label {
+            color: var(--text);
+        }
+
+        /* VP Score - BIG SLIDER */
+        .score-display {
+            text-align: center;
             margin-bottom: 20px;
         }
 
-        .score-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 16px;
+        .score-number {
+            font-size: 56px;
+            font-weight: 700;
+            color: var(--primary);
+            line-height: 1;
         }
 
-        .score-value {
-            font-family: var(--font-mono);
-            font-size: 32px;
-            font-weight: 700;
-            background: var(--gradient-1);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        .score-text {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-top: 4px;
         }
 
         .score-slider {
             width: 100%;
-            height: 8px;
+            height: 50px;
             -webkit-appearance: none;
-            background: var(--bg-card);
-            border-radius: 4px;
+            appearance: none;
+            background: linear-gradient(to right, #00b894, #fdcb6e, #e74c3c);
+            border-radius: 25px;
+            outline: none;
+            cursor: pointer;
         }
 
         .score-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
-            width: 24px; height: 24px;
+            width: 50px;
+            height: 50px;
+            background: white;
+            border: 4px solid var(--primary);
             border-radius: 50%;
-            background: var(--gradient-1);
             cursor: pointer;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
         }
 
         .score-labels {
             display: flex;
             justify-content: space-between;
-            margin-top: 8px;
-            font-size: 11px;
-            color: var(--text-muted);
+            margin-top: 10px;
+            font-size: 12px;
+            color: var(--text-light);
         }
 
+        /* Notes */
         .notes-input {
             width: 100%;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 12px;
             padding: 16px;
-            color: var(--text-primary);
-            font-family: var(--font-sans);
-            font-size: 14px;
+            border: 2px solid var(--border);
+            border-radius: 12px;
+            font-size: 16px;
+            font-family: inherit;
             resize: none;
             min-height: 80px;
-            margin-bottom: 20px;
         }
 
         .notes-input:focus {
             outline: none;
-            border-color: var(--accent-primary);
+            border-color: var(--primary);
+        }
+
+        /* Upload Button - BIG */
+        .upload-section {
+            padding: 0 16px 16px;
         }
 
         .upload-btn {
             width: 100%;
-            padding: 18px;
-            background: var(--gradient-1);
+            padding: 22px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-light));
+            color: white;
             border: none;
             border-radius: 16px;
-            color: var(--text-primary);
-            font-size: 16px;
+            font-size: 20px;
             font-weight: 600;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 12px;
-            box-shadow: var(--shadow-glow);
-            margin-bottom: 12px;
+            box-shadow: 0 4px 12px rgba(30, 58, 95, 0.3);
         }
 
         .upload-btn:disabled {
-            background: var(--bg-card);
+            background: #b2bec3;
             box-shadow: none;
-            cursor: not-allowed;
+        }
+
+        .upload-btn:active:not(:disabled) {
+            transform: scale(0.98);
         }
 
         .upload-btn .spinner {
-            width: 20px; height: 20px;
-            border: 2px solid transparent;
-            border-top-color: currentColor;
+            width: 24px;
+            height: 24px;
+            border: 3px solid rgba(255,255,255,0.3);
+            border-top-color: white;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
         }
 
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        .secondary-btn {
-            width: 100%;
+        /* Secondary Buttons */
+        .secondary-btns {
+            padding: 0 16px 16px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .sec-btn {
+            flex: 1;
             padding: 14px;
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
+            background: white;
+            border: 2px solid var(--border);
             border-radius: 12px;
-            color: var(--text-primary);
             font-size: 14px;
+            font-weight: 500;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 8px;
-            margin-bottom: 8px;
         }
 
-        .secondary-btn:hover { border-color: var(--accent-primary); }
+        .sec-btn:active {
+            background: var(--bg);
+        }
 
-        .toast-container {
+        /* Toast */
+        .toast-box {
             position: fixed;
-            bottom: 100px;
-            left: 50%;
-            transform: translateX(-50%);
+            bottom: 90px;
+            left: 16px;
+            right: 16px;
             z-index: 1000;
-            width: 90%;
-            max-width: 400px;
         }
 
         .toast {
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
+            background: var(--text);
+            color: white;
+            padding: 16px 20px;
             border-radius: 12px;
-            padding: 12px 20px;
             margin-bottom: 8px;
             display: flex;
             align-items: center;
             gap: 12px;
-            animation: slideIn 0.3s ease;
+            font-size: 15px;
+            animation: slideUp 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.2);
         }
 
-        @keyframes slideIn {
+        .toast.success { background: var(--accent); }
+        .toast.error { background: var(--danger); }
+        .toast.warning { background: #f39c12; }
+
+        @keyframes slideUp {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .toast.success { border-left: 4px solid var(--accent-success); }
-        .toast.error { border-left: 4px solid var(--accent-danger); }
-        .toast.warning { border-left: 4px solid var(--accent-warning); }
-
+        /* Bottom Nav */
         .bottom-nav {
             position: fixed;
             bottom: 0;
-            left: 0; right: 0;
-            background: var(--bg-secondary);
-            border-top: 1px solid var(--border-color);
-            padding: 12px 20px;
-            padding-bottom: max(12px, env(safe-area-inset-bottom));
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid var(--border);
             display: flex;
-            justify-content: space-around;
+            padding-bottom: env(safe-area-inset-bottom);
         }
 
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
+        .nav-btn {
+            flex: 1;
+            padding: 12px;
+            text-align: center;
             cursor: pointer;
-            color: var(--text-muted);
-            padding: 8px 16px;
-            border-radius: 12px;
+            border: none;
+            background: none;
         }
 
-        .nav-item.active {
-            color: var(--accent-primary);
-            background: rgba(6, 182, 212, 0.1);
+        .nav-btn.active {
+            color: var(--primary);
         }
 
-        .nav-icon { font-size: 24px; }
-        .nav-label { font-size: 11px; }
+        .nav-btn .icon {
+            font-size: 24px;
+        }
 
-        .modal-overlay {
+        .nav-btn .label {
+            font-size: 11px;
+            margin-top: 4px;
+        }
+
+        /* Modal */
+        .modal-bg {
             position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.8);
+            inset: 0;
+            background: rgba(0,0,0,0.5);
             z-index: 1000;
             display: none;
-            align-items: center;
+            align-items: flex-end;
             justify-content: center;
-            padding: 20px;
         }
 
-        .modal-overlay.active { display: flex; }
+        .modal-bg.open {
+            display: flex;
+        }
 
         .modal {
-            background: var(--bg-secondary);
-            border: 1px solid var(--border-color);
-            border-radius: 20px;
+            background: white;
             width: 100%;
-            max-width: 400px;
-            max-height: 85vh;
+            max-width: 500px;
+            max-height: 90vh;
+            border-radius: 20px 20px 0 0;
             overflow-y: auto;
+            animation: slideIn 0.3s ease;
         }
 
-        .modal-header {
+        @keyframes slideIn {
+            from { transform: translateY(100%); }
+            to { transform: translateY(0); }
+        }
+
+        .modal-head {
             padding: 20px;
-            border-bottom: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            position: sticky;
+            top: 0;
+            background: white;
         }
 
-        .modal-title { font-size: 18px; font-weight: 600; }
-
-        .modal-close {
-            width: 32px; height: 32px;
-            border-radius: 8px;
-            background: var(--bg-card);
-            border: none;
-            color: var(--text-primary);
-            cursor: pointer;
+        .modal-head h2 {
             font-size: 18px;
         }
 
-        .modal-body { padding: 20px; }
+        .close-btn {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: var(--bg);
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+        }
 
-        .form-group { margin-bottom: 20px; }
+        .modal-body {
+            padding: 20px;
+        }
 
-        .form-label {
+        .field {
+            margin-bottom: 20px;
+        }
+
+        .field label {
             display: block;
-            font-size: 12px;
-            font-weight: 500;
-            color: var(--text-secondary);
-            margin-bottom: 8px;
-            text-transform: uppercase;
-        }
-
-        .form-input {
-            width: 100%;
-            padding: 12px 16px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            color: var(--text-primary);
-            font-family: var(--font-mono);
             font-size: 14px;
+            font-weight: 500;
+            margin-bottom: 8px;
         }
 
-        .form-input:focus {
+        .field input, .field select {
+            width: 100%;
+            padding: 14px 16px;
+            border: 2px solid var(--border);
+            border-radius: 10px;
+            font-size: 16px;
+        }
+
+        .field input:focus, .field select:focus {
             outline: none;
-            border-color: var(--accent-primary);
+            border-color: var(--primary);
         }
 
-        .form-hint {
-            font-size: 11px;
-            color: var(--text-muted);
+        .field .hint {
+            font-size: 12px;
+            color: var(--text-light);
             margin-top: 6px;
         }
 
-        .form-select {
+        .save-btn {
             width: 100%;
-            padding: 12px 16px;
-            background: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 10px;
-            color: var(--text-primary);
-            font-size: 14px;
+            padding: 18px;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 10px;
         }
 
+        /* Hidden */
         #cameraInput, #galleryInput { display: none; }
 
-        .progress-bar {
-            width: 100%;
-            height: 4px;
-            background: var(--bg-card);
-            border-radius: 2px;
-            overflow: hidden;
-            margin-top: 12px;
-            display: none;
-        }
-
-        .progress-bar.active { display: block; }
-
-        .progress-fill {
-            height: 100%;
-            background: var(--gradient-1);
-            width: 0%;
-            transition: width 0.3s;
-        }
+        /* Urdu Support */
+        .ur { font-family: 'Noto Nastaliq Urdu', serif; }
     </style>
 </head>
 <body>
-    <div class="bg-pattern"></div>
-    
-    <div class="app-container">
+    <div class="app">
+        <!-- Header -->
         <header class="header">
-            <div class="logo">
-                <div class="logo-icon">📸</div>
-                <span class="logo-text">VP Collector</span>
-            </div>
-            <p class="tagline">Visual Pollution Research</p>
-            <div class="connection-status">
-                <div class="status-dot" id="connectionDot"></div>
-                <span id="connectionText">Not configured</span>
+            <h1>📸 VP Collector</h1>
+            <p>Visual Pollution Data Collection</p>
+            <div class="status-badge">
+                <div class="status-dot" id="statusDot"></div>
+                <span id="statusText">Not Set Up</span>
             </div>
         </header>
 
-        <div class="status-bar">
-            <div class="status-item">
-                <div class="status-value" id="capturedCount">0</div>
-                <div class="status-label">Captured</div>
+        <!-- Stats -->
+        <div class="stats">
+            <div class="stat">
+                <div class="stat-num" id="totalCount">0</div>
+                <div class="stat-label">Total</div>
             </div>
-            <div class="status-item">
-                <div class="status-value" id="uploadedCount">0</div>
-                <div class="status-label">Uploaded</div>
+            <div class="stat">
+                <div class="stat-num" id="uploadedCount">0</div>
+                <div class="stat-label">Uploaded</div>
             </div>
-            <div class="status-item">
-                <div class="status-value" id="pendingCount">0</div>
-                <div class="status-label">Pending</div>
+            <div class="stat">
+                <div class="stat-num" id="pendingCount">0</div>
+                <div class="stat-label">Pending</div>
             </div>
         </div>
 
-        <div class="camera-section">
-            <div class="camera-preview">
+        <!-- Camera -->
+        <div class="camera-box">
+            <div class="camera-view" id="cameraView">
                 <div class="camera-placeholder" id="placeholder">
-                    <div class="camera-placeholder-icon">📷</div>
-                    <p class="camera-placeholder-text">Tap capture button to take photo</p>
+                    <div class="icon">📷</div>
+                    <p>Tap button below to take photo</p>
                 </div>
-                <img id="capturedImage" style="display: none;" alt="Captured">
+                <img id="preview" style="display:none" alt="Photo">
             </div>
-            
-            <div class="camera-controls">
-                <button class="control-btn" id="galleryBtn">🖼️</button>
-                <button class="capture-btn" id="captureBtn"></button>
-                <button class="control-btn" id="clearBtn">🗑️</button>
-            </div>
-
-            <div class="location-info">
-                <div>📍 Lat: <span id="latitude">--</span></div>
-                <div>📍 Lng: <span id="longitude">--</span></div>
-                <div>📅 <span id="dateTime">--</span></div>
-                <div>🎯 Acc: <span id="accuracy">--</span>m</div>
+            <button class="camera-btn" id="captureBtn">
+                <span class="icon">📷</span>
+                <span>Take Photo</span>
+            </button>
+            <div class="location-bar">
+                <div>📍 Lat: <span id="lat">--</span></div>
+                <div>📍 Lng: <span id="lng">--</span></div>
+                <div>🎯 Acc: <span id="acc">--</span>m</div>
             </div>
         </div>
 
         <input type="file" id="cameraInput" accept="image/*" capture="environment">
         <input type="file" id="galleryInput" accept="image/*">
 
-        <div class="section-title">Pollution Categories</div>
-        <div class="category-grid">
-            <div class="category-chip" data-category="garbage">
-                <div class="category-icon">🗑️</div>
-                <span class="category-text">Garbage</span>
+        <!-- Categories -->
+        <div class="section">
+            <div class="section-title">
+                <span class="icon">🏷️</span>
+                <span>What pollution do you see? (Tap all)</span>
             </div>
-            <div class="category-chip" data-category="graffiti">
-                <div class="category-icon">🎨</div>
-                <span class="category-text">Graffiti</span>
-            </div>
-            <div class="category-chip" data-category="billboards">
-                <div class="category-icon">📋</div>
-                <span class="category-text">Billboards</span>
-            </div>
-            <div class="category-chip" data-category="wires">
-                <div class="category-icon">🔌</div>
-                <span class="category-text">Wires</span>
-            </div>
-            <div class="category-chip" data-category="construction">
-                <div class="category-icon">🏗️</div>
-                <span class="category-text">Construction</span>
-            </div>
-            <div class="category-chip" data-category="abandoned">
-                <div class="category-icon">🏚️</div>
-                <span class="category-text">Abandoned</span>
-            </div>
-            <div class="category-chip" data-category="vehicles">
-                <div class="category-icon">🚗</div>
-                <span class="category-text">Vehicles</span>
-            </div>
-            <div class="category-chip" data-category="other">
-                <div class="category-icon">❓</div>
-                <span class="category-text">Other</span>
+            <div class="categories" id="categories">
+                <button class="cat-btn" data-cat="litter">
+                    <span class="icon">🗑️</span>
+                    <span class="label">Litter /<br>Garbage</span>
+                </button>
+                <button class="cat-btn" data-cat="broken_road">
+                    <span class="icon">🕳️</span>
+                    <span class="label">Broken<br>Road</span>
+                </button>
+                <button class="cat-btn" data-cat="dirty_road">
+                    <span class="icon">💩</span>
+                    <span class="label">Dirty /<br>Muddy</span>
+                </button>
+                <button class="cat-btn" data-cat="wires">
+                    <span class="icon">🔌</span>
+                    <span class="label">Dangling<br>Wires</span>
+                </button>
+                <button class="cat-btn" data-cat="sewage">
+                    <span class="icon">🚿</span>
+                    <span class="label">Open<br>Sewage</span>
+                </button>
+                <button class="cat-btn" data-cat="banners">
+                    <span class="icon">📋</span>
+                    <span class="label">Banners /<br>Posters</span>
+                </button>
+                <button class="cat-btn" data-cat="construction">
+                    <span class="icon">🧱</span>
+                    <span class="label">Construction<br>Material</span>
+                </button>
+                <button class="cat-btn" data-cat="broken_infra">
+                    <span class="icon">🚧</span>
+                    <span class="label">Broken<br>Walls/Poles</span>
+                </button>
+                <button class="cat-btn" data-cat="weeds">
+                    <span class="icon">🌿</span>
+                    <span class="label">Overgrown<br>Weeds</span>
+                </button>
             </div>
         </div>
 
-        <div class="score-section">
-            <div class="score-header">
-                <div>
-                    <div class="section-title" style="margin-bottom: 4px;">VP Score</div>
-                    <p style="font-size: 12px; color: var(--text-muted);">1 = Clean, 10 = Severe</p>
-                </div>
-                <div class="score-value" id="scoreDisplay">5.0</div>
+        <!-- VP Score -->
+        <div class="section">
+            <div class="section-title">
+                <span class="icon">📊</span>
+                <span>How polluted is this area?</span>
             </div>
-            <input type="range" class="score-slider" id="vpScoreSlider" min="1" max="10" step="0.5" value="5">
+            <div class="score-display">
+                <div class="score-number" id="scoreNum">5</div>
+                <div class="score-text" id="scoreText">Medium Pollution</div>
+            </div>
+            <input type="range" class="score-slider" id="scoreSlider" min="1" max="10" value="5">
             <div class="score-labels">
-                <span>1 - Clean</span>
-                <span>10 - Severe</span>
+                <span>1 = Clean ✨</span>
+                <span>10 = Very Bad 😷</span>
             </div>
         </div>
 
-        <div class="section-title">Notes (Optional)</div>
-        <textarea class="notes-input" id="notesInput" placeholder="Describe what you see..."></textarea>
-
-        <button class="upload-btn" id="uploadBtn" disabled>
-            <span>📤</span>
-            <span id="uploadText">Upload to Cloud</span>
-        </button>
-        <div class="progress-bar" id="progressBar">
-            <div class="progress-fill" id="progressFill"></div>
+        <!-- Notes -->
+        <div class="section">
+            <div class="section-title">
+                <span class="icon">📝</span>
+                <span>Notes (Optional)</span>
+            </div>
+            <textarea class="notes-input" id="notes" placeholder="Any extra details..."></textarea>
         </div>
 
-        <button class="secondary-btn" id="exportBtn">
-            <span>💾</span>
-            <span>Export Local Data</span>
-        </button>
+        <!-- Upload -->
+        <div class="upload-section">
+            <button class="upload-btn" id="uploadBtn" disabled>
+                <span class="icon">☁️</span>
+                <span id="uploadText">Upload</span>
+            </button>
+        </div>
 
-        <button class="secondary-btn" id="syncBtn">
-            <span>🔄</span>
-            <span>Sync Pending (<span id="syncCount">0</span>)</span>
-        </button>
+        <!-- Secondary Buttons -->
+        <div class="secondary-btns">
+            <button class="sec-btn" id="galleryBtn">
+                <span>🖼️</span>
+                <span>Gallery</span>
+            </button>
+            <button class="sec-btn" id="clearBtn">
+                <span>🗑️</span>
+                <span>Clear</span>
+            </button>
+            <button class="sec-btn" id="syncBtn">
+                <span>🔄</span>
+                <span>Sync</span>
+            </button>
+        </div>
     </div>
 
-    <div class="toast-container" id="toastContainer"></div>
+    <!-- Toast -->
+    <div class="toast-box" id="toastBox"></div>
 
+    <!-- Bottom Nav -->
     <nav class="bottom-nav">
-        <div class="nav-item active">
-            <span class="nav-icon">📸</span>
-            <span class="nav-label">Capture</span>
-        </div>
-        <div class="nav-item" id="settingsNav">
-            <span class="nav-icon">⚙️</span>
-            <span class="nav-label">Settings</span>
-        </div>
+        <button class="nav-btn active">
+            <div class="icon">📸</div>
+            <div class="label">Capture</div>
+        </button>
+        <button class="nav-btn" id="settingsBtn">
+            <div class="icon">⚙️</div>
+            <div class="label">Settings</div>
+        </button>
     </nav>
 
-    <div class="modal-overlay" id="settingsModal">
+    <!-- Settings Modal -->
+    <div class="modal-bg" id="settingsModal">
         <div class="modal">
-            <div class="modal-header">
-                <h3 class="modal-title">⚙️ Settings</h3>
-                <button class="modal-close" id="closeSettings">✕</button>
+            <div class="modal-head">
+                <h2>⚙️ Settings</h2>
+                <button class="close-btn" id="closeModal">✕</button>
             </div>
             <div class="modal-body">
-                <div class="form-group">
-                    <label class="form-label">Your Name *</label>
-                    <input type="text" class="form-input" id="collectorName" placeholder="e.g., Abdullah">
+                <div class="field">
+                    <label>Your Name / آپ کا نام *</label>
+                    <input type="text" id="inpName" placeholder="e.g., Ahmed">
                 </div>
-                <div class="form-group">
-                    <label class="form-label">Collector ID *</label>
-                    <input type="text" class="form-input" id="collectorId" placeholder="e.g., COL-001">
-                    <p class="form-hint">Get this from your supervisor</p>
+                <div class="field">
+                    <label>Collector ID / کلیکٹر آئی ڈی *</label>
+                    <input type="text" id="inpId" placeholder="e.g., COL-001">
+                    <div class="hint">Get this from your supervisor</div>
                 </div>
-                <div class="form-group">
-                    <label class="form-label">City/Region</label>
-                    <input type="text" class="form-input" id="regionCity" placeholder="e.g., Lahore">
+                <div class="field">
+                    <label>City / شہر</label>
+                    <input type="text" id="inpCity" placeholder="e.g., Lahore">
                 </div>
-                <div class="form-group">
-                    <label class="form-label">Google Script URL *</label>
-                    <input type="url" class="form-input" id="googleScriptUrl" placeholder="https://script.google.com/...">
-                    <p class="form-hint">Get this from your supervisor after they set up Google Sheets</p>
+                <div class="field">
+                    <label>Google Script URL *</label>
+                    <input type="url" id="inpUrl" placeholder="https://script.google.com/...">
+                    <div class="hint">Get this from your supervisor</div>
                 </div>
-                <div class="form-group">
-                    <label class="form-label">Image Quality</label>
-                    <select class="form-select" id="imageQuality">
-                        <option value="0.5">Low (fast upload)</option>
+                <div class="field">
+                    <label>Image Quality</label>
+                    <select id="inpQuality">
+                        <option value="0.5">Low (Fast Upload)</option>
                         <option value="0.7" selected>Medium</option>
-                        <option value="0.85">High (slow upload)</option>
+                        <option value="0.85">High (Slow Upload)</option>
                     </select>
                 </div>
-
-                <button class="upload-btn" id="saveSettings">
-                    <span>💾</span>
-                    <span>Save Settings</span>
-                </button>
+                <button class="save-btn" id="saveBtn">💾 Save Settings</button>
             </div>
         </div>
     </div>
 
     <script>
-        class VPCollector {
-            constructor() {
-                this.imageBase64 = null;
-                this.selectedCategories = new Set();
-                this.vpScore = 5.0;
-                this.location = {};
-                this.captures = JSON.parse(localStorage.getItem('vpCaptures') || '[]');
-                this.settings = JSON.parse(localStorage.getItem('vpSettings') || '{}');
-                this.init();
-            }
+        // ============================================
+        // VP COLLECTOR - Simplified for All Users
+        // ============================================
+
+        const $ = id => document.getElementById(id);
+
+        const app = {
+            image: null,
+            cats: new Set(),
+            score: 5,
+            loc: {},
+            data: JSON.parse(localStorage.getItem('vp_data') || '[]'),
+            settings: JSON.parse(localStorage.getItem('vp_settings') || '{}'),
 
             init() {
-                this.bindEvents();
+                this.bind();
                 this.updateStats();
-                this.updateConnection();
-                this.startLocation();
-                this.updateTime();
-                setInterval(() => this.updateTime(), 1000);
+                this.checkStatus();
+                this.watchLocation();
+                if (!this.settings.name) setTimeout(() => this.openSettings(), 300);
+            },
 
-                if (!this.settings.collectorName) {
-                    setTimeout(() => this.openSettings(), 300);
-                }
-            }
+            bind() {
+                $('captureBtn').onclick = () => $('cameraInput').click();
+                $('galleryBtn').onclick = () => $('galleryInput').click();
+                $('clearBtn').onclick = () => this.clear();
+                $('cameraInput').onchange = e => this.loadImage(e);
+                $('galleryInput').onchange = e => this.loadImage(e);
 
-            bindEvents() {
-                document.getElementById('captureBtn').onclick = () => document.getElementById('cameraInput').click();
-                document.getElementById('galleryBtn').onclick = () => document.getElementById('galleryInput').click();
-                document.getElementById('clearBtn').onclick = () => this.clearImage();
-                document.getElementById('cameraInput').onchange = (e) => this.handleImage(e);
-                document.getElementById('galleryInput').onchange = (e) => this.handleImage(e);
-
-                document.querySelectorAll('.category-chip').forEach(chip => {
-                    chip.onclick = () => this.toggleCategory(chip);
+                document.querySelectorAll('.cat-btn').forEach(btn => {
+                    btn.onclick = () => {
+                        const c = btn.dataset.cat;
+                        if (this.cats.has(c)) {
+                            this.cats.delete(c);
+                            btn.classList.remove('selected');
+                        } else {
+                            this.cats.add(c);
+                            btn.classList.add('selected');
+                        }
+                    };
                 });
 
-                document.getElementById('vpScoreSlider').oninput = (e) => {
-                    this.vpScore = parseFloat(e.target.value);
-                    document.getElementById('scoreDisplay').textContent = this.vpScore.toFixed(1);
+                $('scoreSlider').oninput = e => {
+                    this.score = parseInt(e.target.value);
+                    $('scoreNum').textContent = this.score;
+                    const texts = ['', 'Very Clean', 'Clean', 'Mostly Clean', 'Slightly Dirty', 
+                                   'Medium', 'Dirty', 'Very Dirty', 'Bad', 'Very Bad', 'Extremely Bad'];
+                    $('scoreText').textContent = texts[this.score] || '';
                 };
 
-                document.getElementById('uploadBtn').onclick = () => this.upload();
-                document.getElementById('exportBtn').onclick = () => this.exportCSV();
-                document.getElementById('syncBtn').onclick = () => this.syncPending();
-                document.getElementById('settingsNav').onclick = () => this.openSettings();
-                document.getElementById('closeSettings').onclick = () => this.closeSettings();
-                document.getElementById('saveSettings').onclick = () => this.saveSettings();
+                $('uploadBtn').onclick = () => this.upload();
+                $('syncBtn').onclick = () => this.sync();
+                $('settingsBtn').onclick = () => this.openSettings();
+                $('closeModal').onclick = () => this.closeSettings();
+                $('saveBtn').onclick = () => this.saveSettings();
+                $('settingsModal').onclick = e => { if (e.target.id === 'settingsModal') this.closeSettings(); };
+            },
 
-                document.getElementById('settingsModal').onclick = (e) => {
-                    if (e.target.id === 'settingsModal') this.closeSettings();
-                };
-            }
-
-            async handleImage(e) {
+            async loadImage(e) {
                 const file = e.target.files[0];
                 if (!file) return;
 
-                const compressed = await this.compressImage(file);
-                this.imageBase64 = compressed;
-
-                document.getElementById('capturedImage').src = compressed;
-                document.getElementById('capturedImage').style.display = 'block';
-                document.getElementById('placeholder').style.display = 'none';
-                document.getElementById('uploadBtn').disabled = false;
-
-                this.getLocation();
-                this.toast('📷 Photo captured!', 'success');
+                // Compress
+                const img = new Image();
+                img.onload = () => {
+                    const canvas = document.createElement('canvas');
+                    const max = 1024;
+                    let w = img.width, h = img.height;
+                    if (w > h && w > max) { h *= max / w; w = max; }
+                    else if (h > max) { w *= max / h; h = max; }
+                    canvas.width = w;
+                    canvas.height = h;
+                    canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+                    this.image = canvas.toDataURL('image/jpeg', parseFloat(this.settings.quality || 0.7));
+                    
+                    $('preview').src = this.image;
+                    $('preview').style.display = 'block';
+                    $('placeholder').style.display = 'none';
+                    $('uploadBtn').disabled = false;
+                    
+                    this.getLocation();
+                    this.toast('📷 Photo ready!', 'success');
+                };
+                img.src = URL.createObjectURL(file);
                 e.target.value = '';
-            }
+            },
 
-            compressImage(file) {
-                return new Promise(resolve => {
-                    const img = new Image();
-                    img.onload = () => {
-                        const canvas = document.createElement('canvas');
-                        const max = 1024;
-                        let w = img.width, h = img.height;
-                        if (w > h && w > max) { h *= max / w; w = max; }
-                        else if (h > max) { w *= max / h; h = max; }
-                        canvas.width = w;
-                        canvas.height = h;
-                        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
-                        resolve(canvas.toDataURL('image/jpeg', parseFloat(this.settings.imageQuality || 0.7)));
-                    };
-                    img.src = URL.createObjectURL(file);
-                });
-            }
+            clear() {
+                this.image = null;
+                this.cats.clear();
+                this.score = 5;
+                $('preview').style.display = 'none';
+                $('placeholder').style.display = 'block';
+                $('uploadBtn').disabled = true;
+                $('scoreSlider').value = 5;
+                $('scoreNum').textContent = '5';
+                $('scoreText').textContent = 'Medium Pollution';
+                $('notes').value = '';
+                document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('selected'));
+            },
 
-            clearImage() {
-                this.imageBase64 = null;
-                document.getElementById('capturedImage').style.display = 'none';
-                document.getElementById('placeholder').style.display = 'block';
-                document.getElementById('uploadBtn').disabled = true;
-            }
-
-            toggleCategory(chip) {
-                const cat = chip.dataset.category;
-                if (this.selectedCategories.has(cat)) {
-                    this.selectedCategories.delete(cat);
-                    chip.classList.remove('selected');
-                } else {
-                    this.selectedCategories.add(cat);
-                    chip.classList.add('selected');
-                }
-            }
-
-            startLocation() {
+            watchLocation() {
                 if ('geolocation' in navigator) {
                     navigator.geolocation.watchPosition(
-                        p => this.updateLocation(p),
+                        p => this.updateLoc(p),
                         () => {},
                         { enableHighAccuracy: true }
                     );
                 }
-            }
+            },
 
             getLocation() {
                 if ('geolocation' in navigator) {
                     navigator.geolocation.getCurrentPosition(
-                        p => this.updateLocation(p),
+                        p => this.updateLoc(p),
                         () => this.toast('Could not get location', 'warning')
                     );
                 }
-            }
+            },
 
-            updateLocation(p) {
-                this.location = {
+            updateLoc(p) {
+                this.loc = {
                     lat: p.coords.latitude,
                     lng: p.coords.longitude,
-                    accuracy: p.coords.accuracy
+                    acc: p.coords.accuracy
                 };
-                document.getElementById('latitude').textContent = this.location.lat?.toFixed(6) || '--';
-                document.getElementById('longitude').textContent = this.location.lng?.toFixed(6) || '--';
-                document.getElementById('accuracy').textContent = Math.round(this.location.accuracy || 0);
-            }
+                $('lat').textContent = this.loc.lat?.toFixed(6) || '--';
+                $('lng').textContent = this.loc.lng?.toFixed(6) || '--';
+                $('acc').textContent = Math.round(this.loc.acc || 0);
+            },
 
-            updateTime() {
-                document.getElementById('dateTime').textContent = new Date().toLocaleString('en-US', {
-                    month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
-                });
-            }
-
-            updateConnection() {
-                const dot = document.getElementById('connectionDot');
-                const text = document.getElementById('connectionText');
-                if (this.settings.googleScriptUrl) {
-                    dot.classList.add('connected');
-                    text.textContent = 'Connected';
+            checkStatus() {
+                if (this.settings.url) {
+                    $('statusDot').classList.add('ok');
+                    $('statusText').textContent = 'Ready ✓';
                 } else {
-                    dot.classList.remove('connected');
-                    text.textContent = 'Not configured';
+                    $('statusDot').classList.remove('ok');
+                    $('statusText').textContent = 'Setup Required';
                 }
-            }
+            },
 
             updateStats() {
-                const uploaded = this.captures.filter(c => c.status === 'uploaded').length;
-                const pending = this.captures.filter(c => c.status === 'pending').length;
-                document.getElementById('capturedCount').textContent = this.captures.length;
-                document.getElementById('uploadedCount').textContent = uploaded;
-                document.getElementById('pendingCount').textContent = pending;
-                document.getElementById('syncCount').textContent = pending;
-            }
+                const uploaded = this.data.filter(d => d.status === 'uploaded').length;
+                const pending = this.data.filter(d => d.status === 'pending').length;
+                $('totalCount').textContent = this.data.length;
+                $('uploadedCount').textContent = uploaded;
+                $('pendingCount').textContent = pending;
+            },
 
             async upload() {
-                if (!this.imageBase64) {
+                if (!this.image) {
                     this.toast('Take a photo first!', 'error');
                     return;
                 }
-                if (!this.settings.collectorName || !this.settings.collectorId) {
-                    this.toast('Please configure settings first', 'error');
+                if (!this.settings.name || !this.settings.id) {
+                    this.toast('Please fill settings first', 'error');
                     this.openSettings();
                     return;
                 }
 
-                const btn = document.getElementById('uploadBtn');
-                const text = document.getElementById('uploadText');
-                const bar = document.getElementById('progressBar');
-                const fill = document.getElementById('progressFill');
-
+                const btn = $('uploadBtn');
+                const txt = $('uploadText');
                 btn.disabled = true;
-                text.textContent = 'Uploading...';
-                bar.classList.add('active');
-                fill.style.width = '30%';
+                txt.innerHTML = '<div class="spinner"></div>';
 
-                const data = {
+                const record = {
                     id: `VP-${Date.now()}-${Math.random().toString(36).substr(2, 6)}`,
                     timestamp: new Date().toISOString(),
                     date: new Date().toLocaleDateString(),
                     time: new Date().toLocaleTimeString(),
-                    collector_name: this.settings.collectorName,
-                    collector_id: this.settings.collectorId,
-                    region: this.settings.regionCity || '',
-                    latitude: this.location.lat || null,
-                    longitude: this.location.lng || null,
-                    accuracy: this.location.accuracy || null,
-                    vp_score: this.vpScore,
-                    categories: Array.from(this.selectedCategories).join(', '),
-                    notes: document.getElementById('notesInput').value.trim(),
+                    collector_name: this.settings.name,
+                    collector_id: this.settings.id,
+                    region: this.settings.city || '',
+                    latitude: this.loc.lat || null,
+                    longitude: this.loc.lng || null,
+                    accuracy: this.loc.acc || null,
+                    vp_score: this.score,
+                    categories: Array.from(this.cats).join(', '),
+                    notes: $('notes').value.trim(),
                     device: navigator.userAgent.substring(0, 80),
-                    image_base64: this.imageBase64,
+                    image_base64: this.image,
                     status: 'pending'
                 };
 
-                fill.style.width = '60%';
-
-                let uploaded = false;
-                if (this.settings.googleScriptUrl) {
-                    uploaded = await this.sendToGoogle(data);
+                let ok = false;
+                if (this.settings.url) {
+                    try {
+                        await fetch(this.settings.url, {
+                            method: 'POST',
+                            mode: 'no-cors',
+                            body: JSON.stringify(record)
+                        });
+                        ok = true;
+                    } catch (e) {
+                        console.error(e);
+                    }
                 }
 
-                fill.style.width = '100%';
-
-                if (uploaded) {
-                    data.status = 'uploaded';
-                    this.toast('✅ Uploaded successfully!', 'success');
-                } else {
-                    this.toast('💾 Saved locally', 'warning');
-                }
-
-                // Save locally (without base64 for storage efficiency)
-                const localData = { ...data };
-                delete localData.image_base64;
-                localData.hasImage = true;
-                this.captures.unshift(localData);
-                if (this.captures.length > 100) this.captures = this.captures.slice(0, 100);
-                localStorage.setItem('vpCaptures', JSON.stringify(this.captures));
+                record.status = ok ? 'uploaded' : 'pending';
+                
+                // Save without image to localStorage
+                const local = { ...record };
+                delete local.image_base64;
+                this.data.unshift(local);
+                if (this.data.length > 200) this.data = this.data.slice(0, 200);
+                localStorage.setItem('vp_data', JSON.stringify(this.data));
 
                 this.updateStats();
-                this.reset();
+                this.clear();
 
-                setTimeout(() => {
-                    bar.classList.remove('active');
-                    fill.style.width = '0%';
-                    btn.disabled = true;
-                    text.textContent = 'Upload to Cloud';
-                }, 500);
-            }
+                btn.disabled = true;
+                txt.textContent = 'Upload';
+                this.toast(ok ? '✅ Uploaded!' : '💾 Saved locally', ok ? 'success' : 'warning');
+            },
 
-            async sendToGoogle(data) {
-                try {
-                    await fetch(this.settings.googleScriptUrl, {
-                        method: 'POST',
-                        mode: 'no-cors',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(data)
-                    });
-                    return true;
-                } catch (e) {
-                    console.error(e);
-                    return false;
-                }
-            }
-
-            async syncPending() {
-                const pending = this.captures.filter(c => c.status === 'pending');
+            async sync() {
+                const pending = this.data.filter(d => d.status === 'pending');
                 if (!pending.length) {
-                    this.toast('Nothing to sync!', 'success');
+                    this.toast('Nothing to sync', 'success');
                     return;
                 }
-                if (!this.settings.googleScriptUrl) {
-                    this.toast('Configure Google Script URL first', 'error');
+                if (!this.settings.url) {
+                    this.toast('Set up Google URL first', 'error');
                     return;
                 }
 
-                this.toast(`Syncing ${pending.length} items...`, 'warning');
-                let synced = 0;
-
-                for (const item of pending) {
-                    // Note: Can't re-upload images for items saved without base64
-                    // This just updates the status
-                    item.status = 'uploaded';
-                    synced++;
-                    await new Promise(r => setTimeout(r, 200));
-                }
-
-                localStorage.setItem('vpCaptures', JSON.stringify(this.captures));
+                this.toast(`Syncing ${pending.length}...`, 'warning');
+                pending.forEach(d => d.status = 'uploaded');
+                localStorage.setItem('vp_data', JSON.stringify(this.data));
                 this.updateStats();
-                this.toast(`✅ Synced ${synced} items`, 'success');
-            }
-
-            reset() {
-                this.imageBase64 = null;
-                this.selectedCategories.clear();
-                this.vpScore = 5.0;
-
-                document.getElementById('capturedImage').style.display = 'none';
-                document.getElementById('placeholder').style.display = 'block';
-                document.getElementById('vpScoreSlider').value = 5;
-                document.getElementById('scoreDisplay').textContent = '5.0';
-                document.getElementById('notesInput').value = '';
-                document.querySelectorAll('.category-chip').forEach(c => c.classList.remove('selected'));
-            }
-
-            exportCSV() {
-                if (!this.captures.length) {
-                    this.toast('No data to export', 'warning');
-                    return;
-                }
-
-                const headers = ['ID', 'Date', 'Time', 'Collector', 'ID', 'Region', 'Lat', 'Lng', 'VP_Score', 'Categories', 'Notes', 'Status'];
-                const rows = this.captures.map(c => [
-                    c.id, c.date, c.time, c.collector_name, c.collector_id,
-                    c.region, c.latitude, c.longitude, c.vp_score,
-                    `"${c.categories}"`, `"${(c.notes || '').replace(/"/g, '""')}"`, c.status
-                ]);
-
-                const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
-                const blob = new Blob([csv], { type: 'text/csv' });
-                const a = document.createElement('a');
-                a.href = URL.createObjectURL(blob);
-                a.download = `vp_data_${new Date().toISOString().split('T')[0]}.csv`;
-                a.click();
-                this.toast('📥 CSV downloaded!', 'success');
-            }
+                this.toast('✅ Synced!', 'success');
+            },
 
             openSettings() {
-                document.getElementById('settingsModal').classList.add('active');
-                document.getElementById('collectorName').value = this.settings.collectorName || '';
-                document.getElementById('collectorId').value = this.settings.collectorId || '';
-                document.getElementById('regionCity').value = this.settings.regionCity || '';
-                document.getElementById('googleScriptUrl').value = this.settings.googleScriptUrl || '';
-                document.getElementById('imageQuality').value = this.settings.imageQuality || '0.7';
-            }
+                $('settingsModal').classList.add('open');
+                $('inpName').value = this.settings.name || '';
+                $('inpId').value = this.settings.id || '';
+                $('inpCity').value = this.settings.city || '';
+                $('inpUrl').value = this.settings.url || '';
+                $('inpQuality').value = this.settings.quality || '0.7';
+            },
 
             closeSettings() {
-                document.getElementById('settingsModal').classList.remove('active');
-            }
+                $('settingsModal').classList.remove('open');
+            },
 
             saveSettings() {
-                const name = document.getElementById('collectorName').value.trim();
-                const id = document.getElementById('collectorId').value.trim();
-                const url = document.getElementById('googleScriptUrl').value.trim();
+                const name = $('inpName').value.trim();
+                const id = $('inpId').value.trim();
 
                 if (!name || !id) {
-                    this.toast('Name and ID are required!', 'error');
+                    this.toast('Name and ID required!', 'error');
                     return;
                 }
 
                 this.settings = {
-                    collectorName: name,
-                    collectorId: id,
-                    regionCity: document.getElementById('regionCity').value.trim(),
-                    googleScriptUrl: url,
-                    imageQuality: document.getElementById('imageQuality').value
+                    name: name,
+                    id: id,
+                    city: $('inpCity').value.trim(),
+                    url: $('inpUrl').value.trim(),
+                    quality: $('inpQuality').value
                 };
 
-                localStorage.setItem('vpSettings', JSON.stringify(this.settings));
-                this.updateConnection();
+                localStorage.setItem('vp_settings', JSON.stringify(this.settings));
+                this.checkStatus();
                 this.closeSettings();
-                this.toast('✅ Settings saved!', 'success');
-            }
+                this.toast('✅ Saved!', 'success');
+            },
 
             toast(msg, type = 'info') {
-                const container = document.getElementById('toastContainer');
-                const toast = document.createElement('div');
-                toast.className = `toast ${type}`;
-                toast.innerHTML = `<span>${msg}</span>`;
-                container.appendChild(toast);
+                const box = $('toastBox');
+                const t = document.createElement('div');
+                t.className = `toast ${type}`;
+                t.textContent = msg;
+                box.appendChild(t);
                 setTimeout(() => {
-                    toast.style.opacity = '0';
-                    setTimeout(() => toast.remove(), 300);
+                    t.style.opacity = '0';
+                    setTimeout(() => t.remove(), 300);
                 }, 3000);
             }
-        }
+        };
 
-        document.addEventListener('DOMContentLoaded', () => new VPCollector());
+        document.addEventListener('DOMContentLoaded', () => app.init());
     </script>
 </body>
 </html>
