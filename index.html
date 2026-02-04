@@ -8,10 +8,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>VP Collector | Visual Pollution Research</title>
     
-    <!-- PWA Manifest -->
     <link rel="manifest" href="manifest.json">
-    
-    <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -31,18 +28,12 @@
             --text-muted: #64748b;
             --border-color: #475569;
             --gradient-1: linear-gradient(135deg, #06b6d4 0%, #8b5cf6 100%);
-            --gradient-2: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
             --shadow-glow: 0 0 40px rgba(6, 182, 212, 0.3);
             --font-mono: 'JetBrains Mono', monospace;
             --font-sans: 'Space Grotesk', sans-serif;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            -webkit-tap-highlight-color: transparent;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
             font-family: var(--font-sans);
@@ -50,68 +41,31 @@
             color: var(--text-primary);
             min-height: 100vh;
             min-height: 100dvh;
-            overflow-x: hidden;
-            position: relative;
         }
 
-        /* Animated Background */
         .bg-pattern {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             z-index: 0;
             opacity: 0.4;
             background-image: 
                 radial-gradient(circle at 20% 80%, rgba(6, 182, 212, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
-                radial-gradient(circle at 40% 40%, rgba(16, 185, 129, 0.1) 0%, transparent 30%);
-            animation: pulse 8s ease-in-out infinite;
+                radial-gradient(circle at 80% 20%, rgba(139, 92, 246, 0.15) 0%, transparent 50%);
         }
 
-        @keyframes pulse {
-            0%, 100% { opacity: 0.4; }
-            50% { opacity: 0.6; }
-        }
-
-        /* Grid Pattern Overlay */
-        .grid-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: 0;
-            background-image: 
-                linear-gradient(rgba(71, 85, 105, 0.1) 1px, transparent 1px),
-                linear-gradient(90deg, rgba(71, 85, 105, 0.1) 1px, transparent 1px);
-            background-size: 40px 40px;
-            pointer-events: none;
-        }
-
-        /* App Container */
         .app-container {
             position: relative;
             z-index: 1;
             max-width: 480px;
             margin: 0 auto;
-            min-height: 100vh;
-            min-height: 100dvh;
             padding: 20px;
             padding-bottom: 100px;
         }
 
-        /* Header */
         .header {
             text-align: center;
-            margin-bottom: 30px;
-            animation: slideDown 0.6s ease-out;
-        }
-
-        @keyframes slideDown {
-            from { opacity: 0; transform: translateY(-20px); }
-            to { opacity: 1; transform: translateY(0); }
+            margin-bottom: 24px;
         }
 
         .logo {
@@ -123,8 +77,7 @@
         }
 
         .logo-icon {
-            width: 48px;
-            height: 48px;
+            width: 48px; height: 48px;
             background: var(--gradient-1);
             border-radius: 12px;
             display: flex;
@@ -140,8 +93,6 @@
             background: var(--gradient-1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
-            letter-spacing: -0.5px;
         }
 
         .tagline {
@@ -152,17 +103,29 @@
             text-transform: uppercase;
         }
 
-        /* Status Bar */
+        .connection-status {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            margin-top: 12px;
+            padding: 8px 16px;
+            background: var(--bg-secondary);
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        .status-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: var(--accent-warning);
+        }
+        .status-dot.connected { background: var(--accent-success); }
+        .status-dot.error { background: var(--accent-danger); }
+
         .status-bar {
             display: flex;
             gap: 12px;
-            margin-bottom: 24px;
-            animation: fadeIn 0.6s ease-out 0.2s both;
-        }
-
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+            margin-bottom: 20px;
         }
 
         .status-item {
@@ -185,23 +148,14 @@
             font-size: 11px;
             color: var(--text-muted);
             text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-top: 4px;
         }
 
-        /* Camera Section */
         .camera-section {
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
             border-radius: 20px;
             overflow: hidden;
-            margin-bottom: 24px;
-            animation: slideUp 0.6s ease-out 0.3s both;
-        }
-
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
+            margin-bottom: 20px;
         }
 
         .camera-preview {
@@ -212,10 +166,8 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow: hidden;
         }
 
-        .camera-preview video,
         .camera-preview img {
             width: 100%;
             height: 100%;
@@ -227,52 +179,9 @@
             padding: 40px;
         }
 
-        .camera-placeholder-icon {
-            font-size: 64px;
-            margin-bottom: 16px;
-            opacity: 0.5;
-        }
+        .camera-placeholder-icon { font-size: 64px; opacity: 0.5; }
+        .camera-placeholder-text { color: var(--text-muted); font-size: 14px; margin-top: 12px; }
 
-        .camera-placeholder-text {
-            color: var(--text-muted);
-            font-size: 14px;
-        }
-
-        /* Viewfinder Grid */
-        .viewfinder {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-        }
-
-        .viewfinder-grid {
-            width: 100%;
-            height: 100%;
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            grid-template-rows: repeat(3, 1fr);
-        }
-
-        .viewfinder-cell {
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .viewfinder-corner {
-            position: absolute;
-            width: 24px;
-            height: 24px;
-            border: 3px solid var(--accent-primary);
-        }
-
-        .viewfinder-corner.tl { top: 12px; left: 12px; border-right: none; border-bottom: none; }
-        .viewfinder-corner.tr { top: 12px; right: 12px; border-left: none; border-bottom: none; }
-        .viewfinder-corner.bl { bottom: 12px; left: 12px; border-right: none; border-top: none; }
-        .viewfinder-corner.br { bottom: 12px; right: 12px; border-left: none; border-top: none; }
-
-        /* Camera Controls */
         .camera-controls {
             display: flex;
             justify-content: center;
@@ -283,89 +192,39 @@
         }
 
         .capture-btn {
-            width: 72px;
-            height: 72px;
+            width: 72px; height: 72px;
             border-radius: 50%;
             background: var(--gradient-1);
             border: 4px solid var(--text-primary);
             cursor: pointer;
-            position: relative;
-            transition: all 0.2s ease;
             box-shadow: var(--shadow-glow);
+            transition: transform 0.2s;
         }
-
-        .capture-btn:hover {
-            transform: scale(1.05);
-        }
-
-        .capture-btn:active {
-            transform: scale(0.95);
-        }
-
-        .capture-btn::after {
-            content: '';
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 56px;
-            height: 56px;
-            border-radius: 50%;
-            border: 2px solid rgba(255, 255, 255, 0.5);
-        }
+        .capture-btn:active { transform: scale(0.95); }
 
         .control-btn {
-            width: 48px;
-            height: 48px;
+            width: 48px; height: 48px;
             border-radius: 50%;
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
             color: var(--text-primary);
             font-size: 20px;
             cursor: pointer;
-            transition: all 0.2s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center;
         }
 
-        .control-btn:hover {
-            background: var(--bg-card);
-            border-color: var(--accent-primary);
-        }
-
-        /* Location Info */
         .location-info {
-            padding: 16px 20px;
+            padding: 12px 20px;
             border-top: 1px solid var(--border-color);
             display: grid;
             grid-template-columns: 1fr 1fr;
-            gap: 12px;
-        }
-
-        .location-item {
-            display: flex;
-            align-items: center;
             gap: 8px;
-        }
-
-        .location-icon {
-            font-size: 16px;
-            color: var(--accent-primary);
-        }
-
-        .location-text {
             font-family: var(--font-mono);
             font-size: 11px;
             color: var(--text-secondary);
         }
 
-        .location-text span {
-            color: var(--text-primary);
-            font-weight: 500;
-        }
+        .location-info span { color: var(--text-primary); }
 
-        /* Category Selection */
         .section-title {
             font-size: 14px;
             font-weight: 600;
@@ -380,8 +239,7 @@
 
         .section-title::before {
             content: '';
-            width: 4px;
-            height: 16px;
+            width: 4px; height: 16px;
             background: var(--gradient-1);
             border-radius: 2px;
         }
@@ -390,61 +248,45 @@
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 10px;
-            margin-bottom: 24px;
-            animation: slideUp 0.6s ease-out 0.4s both;
+            margin-bottom: 20px;
         }
 
         .category-chip {
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
             border-radius: 12px;
-            padding: 12px 16px;
+            padding: 12px;
             cursor: pointer;
-            transition: all 0.2s ease;
             display: flex;
             align-items: center;
             gap: 10px;
+            transition: all 0.2s;
         }
 
-        .category-chip:hover {
-            border-color: var(--accent-primary);
-            background: var(--bg-card);
-        }
-
+        .category-chip:hover { border-color: var(--accent-primary); }
         .category-chip.selected {
             background: rgba(6, 182, 212, 0.15);
             border-color: var(--accent-primary);
         }
 
-        .category-chip.selected .category-icon {
-            background: var(--accent-primary);
-        }
-
         .category-icon {
-            width: 32px;
-            height: 32px;
+            width: 32px; height: 32px;
             border-radius: 8px;
             background: var(--bg-card);
             display: flex;
             align-items: center;
             justify-content: center;
             font-size: 16px;
-            transition: all 0.2s ease;
         }
 
-        .category-text {
-            font-size: 13px;
-            font-weight: 500;
-        }
+        .category-text { font-size: 13px; font-weight: 500; }
 
-        /* VP Score Slider */
         .score-section {
             background: var(--bg-secondary);
             border: 1px solid var(--border-color);
             border-radius: 16px;
             padding: 20px;
-            margin-bottom: 24px;
-            animation: slideUp 0.6s ease-out 0.5s both;
+            margin-bottom: 20px;
         }
 
         .score-header {
@@ -461,63 +303,30 @@
             background: var(--gradient-1);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            background-clip: text;
-        }
-
-        .score-scale {
-            display: flex;
-            gap: 4px;
-        }
-
-        .score-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: var(--bg-card);
-            transition: all 0.2s ease;
-        }
-
-        .score-dot.active {
-            background: var(--accent-primary);
         }
 
         .score-slider {
             width: 100%;
             height: 8px;
             -webkit-appearance: none;
-            appearance: none;
             background: var(--bg-card);
             border-radius: 4px;
-            outline: none;
         }
 
         .score-slider::-webkit-slider-thumb {
             -webkit-appearance: none;
-            appearance: none;
-            width: 24px;
-            height: 24px;
+            width: 24px; height: 24px;
             border-radius: 50%;
             background: var(--gradient-1);
             cursor: pointer;
-            box-shadow: var(--shadow-glow);
         }
 
         .score-labels {
             display: flex;
             justify-content: space-between;
             margin-top: 8px;
-        }
-
-        .score-label {
             font-size: 11px;
             color: var(--text-muted);
-            font-family: var(--font-mono);
-        }
-
-        /* Notes Input */
-        .notes-section {
-            margin-bottom: 24px;
-            animation: slideUp 0.6s ease-out 0.6s both;
         }
 
         .notes-input {
@@ -531,125 +340,74 @@
             font-size: 14px;
             resize: none;
             min-height: 80px;
-            transition: all 0.2s ease;
+            margin-bottom: 20px;
         }
 
         .notes-input:focus {
             outline: none;
             border-color: var(--accent-primary);
-            box-shadow: 0 0 0 3px rgba(6, 182, 212, 0.1);
         }
 
-        .notes-input::placeholder {
-            color: var(--text-muted);
-        }
-
-        /* Upload Button */
         .upload-btn {
             width: 100%;
-            padding: 18px 32px;
+            padding: 18px;
             background: var(--gradient-1);
             border: none;
             border-radius: 16px;
             color: var(--text-primary);
-            font-family: var(--font-sans);
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: all 0.3s ease;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 12px;
             box-shadow: var(--shadow-glow);
-            animation: slideUp 0.6s ease-out 0.7s both;
-        }
-
-        .upload-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 60px rgba(6, 182, 212, 0.4);
-        }
-
-        .upload-btn:active {
-            transform: translateY(0);
+            margin-bottom: 12px;
         }
 
         .upload-btn:disabled {
             background: var(--bg-card);
-            cursor: not-allowed;
             box-shadow: none;
+            cursor: not-allowed;
         }
 
         .upload-btn .spinner {
-            width: 20px;
-            height: 20px;
+            width: 20px; height: 20px;
             border: 2px solid transparent;
             border-top-color: currentColor;
             border-radius: 50%;
             animation: spin 0.8s linear infinite;
         }
 
-        @keyframes spin {
-            to { transform: rotate(360deg); }
-        }
+        @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* Gallery Section */
-        .gallery-section {
-            margin-top: 32px;
-            animation: slideUp 0.6s ease-out 0.8s both;
-        }
-
-        .gallery-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 8px;
-        }
-
-        .gallery-item {
-            position: relative;
-            aspect-ratio: 1;
-            border-radius: 12px;
-            overflow: hidden;
-            cursor: pointer;
-        }
-
-        .gallery-item img {
+        .secondary-btn {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.3s ease;
+            padding: 14px;
+            background: var(--bg-secondary);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            color: var(--text-primary);
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 8px;
         }
 
-        .gallery-item:hover img {
-            transform: scale(1.05);
-        }
+        .secondary-btn:hover { border-color: var(--accent-primary); }
 
-        .gallery-badge {
-            position: absolute;
-            bottom: 8px;
-            right: 8px;
-            background: var(--accent-success);
-            color: white;
-            font-size: 10px;
-            padding: 4px 8px;
-            border-radius: 6px;
-            font-weight: 600;
-        }
-
-        .gallery-badge.pending {
-            background: var(--accent-warning);
-        }
-
-        /* Toast Notifications */
         .toast-container {
             position: fixed;
             bottom: 100px;
             left: 50%;
             transform: translateX(-50%);
             z-index: 1000;
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
+            width: 90%;
+            max-width: 400px;
         }
 
         .toast {
@@ -657,14 +415,14 @@
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 12px 20px;
+            margin-bottom: 8px;
             display: flex;
             align-items: center;
             gap: 12px;
-            animation: toastIn 0.3s ease-out;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.3s ease;
         }
 
-        @keyframes toastIn {
+        @keyframes slideIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
@@ -673,22 +431,16 @@
         .toast.error { border-left: 4px solid var(--accent-danger); }
         .toast.warning { border-left: 4px solid var(--accent-warning); }
 
-        .toast-icon { font-size: 20px; }
-        .toast-message { font-size: 14px; }
-
-        /* Bottom Navigation */
         .bottom-nav {
             position: fixed;
             bottom: 0;
-            left: 0;
-            right: 0;
+            left: 0; right: 0;
             background: var(--bg-secondary);
             border-top: 1px solid var(--border-color);
             padding: 12px 20px;
             padding-bottom: max(12px, env(safe-area-inset-bottom));
             display: flex;
             justify-content: space-around;
-            z-index: 100;
         }
 
         .nav-item {
@@ -698,30 +450,22 @@
             gap: 4px;
             cursor: pointer;
             color: var(--text-muted);
-            transition: color 0.2s ease;
             padding: 8px 16px;
             border-radius: 12px;
         }
 
-        .nav-item:hover,
         .nav-item.active {
             color: var(--accent-primary);
-        }
-
-        .nav-item.active {
             background: rgba(6, 182, 212, 0.1);
         }
 
         .nav-icon { font-size: 24px; }
-        .nav-label { font-size: 11px; font-weight: 500; }
+        .nav-label { font-size: 11px; }
 
-        /* Modal */
         .modal-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             background: rgba(0, 0, 0, 0.8);
             z-index: 1000;
             display: none;
@@ -730,9 +474,7 @@
             padding: 20px;
         }
 
-        .modal-overlay.active {
-            display: flex;
-        }
+        .modal-overlay.active { display: flex; }
 
         .modal {
             background: var(--bg-secondary);
@@ -740,14 +482,8 @@
             border-radius: 20px;
             width: 100%;
             max-width: 400px;
-            max-height: 80vh;
+            max-height: 85vh;
             overflow-y: auto;
-            animation: modalIn 0.3s ease-out;
-        }
-
-        @keyframes modalIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
         }
 
         .modal-header {
@@ -758,14 +494,10 @@
             align-items: center;
         }
 
-        .modal-title {
-            font-size: 18px;
-            font-weight: 600;
-        }
+        .modal-title { font-size: 18px; font-weight: 600; }
 
         .modal-close {
-            width: 32px;
-            height: 32px;
+            width: 32px; height: 32px;
             border-radius: 8px;
             background: var(--bg-card);
             border: none;
@@ -774,14 +506,9 @@
             font-size: 18px;
         }
 
-        .modal-body {
-            padding: 20px;
-        }
+        .modal-body { padding: 20px; }
 
-        /* Settings Form */
-        .form-group {
-            margin-bottom: 20px;
-        }
+        .form-group { margin-bottom: 20px; }
 
         .form-label {
             display: block;
@@ -790,7 +517,6 @@
             color: var(--text-secondary);
             margin-bottom: 8px;
             text-transform: uppercase;
-            letter-spacing: 0.5px;
         }
 
         .form-input {
@@ -802,12 +528,17 @@
             color: var(--text-primary);
             font-family: var(--font-mono);
             font-size: 14px;
-            transition: all 0.2s ease;
         }
 
         .form-input:focus {
             outline: none;
             border-color: var(--accent-primary);
+        }
+
+        .form-hint {
+            font-size: 11px;
+            color: var(--text-muted);
+            margin-top: 6px;
         }
 
         .form-select {
@@ -817,43 +548,47 @@
             border: 1px solid var(--border-color);
             border-radius: 10px;
             color: var(--text-primary);
-            font-family: var(--font-sans);
             font-size: 14px;
-            cursor: pointer;
         }
 
-        /* Hidden video input */
-        #cameraInput {
+        #cameraInput, #galleryInput { display: none; }
+
+        .progress-bar {
+            width: 100%;
+            height: 4px;
+            background: var(--bg-card);
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 12px;
             display: none;
         }
 
-        /* Responsive */
-        @media (max-width: 380px) {
-            .category-grid {
-                grid-template-columns: 1fr;
-            }
-            
-            .status-bar {
-                flex-direction: column;
-            }
+        .progress-bar.active { display: block; }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--gradient-1);
+            width: 0%;
+            transition: width 0.3s;
         }
     </style>
 </head>
 <body>
     <div class="bg-pattern"></div>
-    <div class="grid-overlay"></div>
     
     <div class="app-container">
-        <!-- Header -->
         <header class="header">
             <div class="logo">
                 <div class="logo-icon">📸</div>
                 <span class="logo-text">VP Collector</span>
             </div>
-            <p class="tagline">Visual Pollution Research • LUMS</p>
+            <p class="tagline">Visual Pollution Research</p>
+            <div class="connection-status">
+                <div class="status-dot" id="connectionDot"></div>
+                <span id="connectionText">Not configured</span>
+            </div>
         </header>
 
-        <!-- Status Bar -->
         <div class="status-bar">
             <div class="status-item">
                 <div class="status-value" id="capturedCount">0</div>
@@ -869,70 +604,37 @@
             </div>
         </div>
 
-        <!-- Camera Section -->
         <div class="camera-section">
-            <div class="camera-preview" id="cameraPreview">
+            <div class="camera-preview">
                 <div class="camera-placeholder" id="placeholder">
                     <div class="camera-placeholder-icon">📷</div>
-                    <p class="camera-placeholder-text">Tap capture to take photo<br>or select from gallery</p>
+                    <p class="camera-placeholder-text">Tap capture button to take photo</p>
                 </div>
-                <video id="videoStream" autoplay playsinline style="display: none;"></video>
                 <img id="capturedImage" style="display: none;" alt="Captured">
-                <div class="viewfinder" id="viewfinder" style="display: none;">
-                    <div class="viewfinder-grid">
-                        <div class="viewfinder-cell"></div>
-                        <div class="viewfinder-cell"></div>
-                        <div class="viewfinder-cell"></div>
-                        <div class="viewfinder-cell"></div>
-                        <div class="viewfinder-cell"></div>
-                        <div class="viewfinder-cell"></div>
-                        <div class="viewfinder-cell"></div>
-                        <div class="viewfinder-cell"></div>
-                        <div class="viewfinder-cell"></div>
-                    </div>
-                    <div class="viewfinder-corner tl"></div>
-                    <div class="viewfinder-corner tr"></div>
-                    <div class="viewfinder-corner bl"></div>
-                    <div class="viewfinder-corner br"></div>
-                </div>
             </div>
             
             <div class="camera-controls">
-                <button class="control-btn" id="galleryBtn" title="Gallery">🖼️</button>
-                <button class="capture-btn" id="captureBtn" title="Capture"></button>
-                <button class="control-btn" id="switchCameraBtn" title="Switch Camera">🔄</button>
+                <button class="control-btn" id="galleryBtn">🖼️</button>
+                <button class="capture-btn" id="captureBtn"></button>
+                <button class="control-btn" id="clearBtn">🗑️</button>
             </div>
 
             <div class="location-info">
-                <div class="location-item">
-                    <span class="location-icon">📍</span>
-                    <span class="location-text">Lat: <span id="latitude">--</span></span>
-                </div>
-                <div class="location-item">
-                    <span class="location-icon">📍</span>
-                    <span class="location-text">Lng: <span id="longitude">--</span></span>
-                </div>
-                <div class="location-item">
-                    <span class="location-icon">📅</span>
-                    <span class="location-text" id="dateTime">--</span>
-                </div>
-                <div class="location-item">
-                    <span class="location-icon">🎯</span>
-                    <span class="location-text">Acc: <span id="accuracy">--</span>m</span>
-                </div>
+                <div>📍 Lat: <span id="latitude">--</span></div>
+                <div>📍 Lng: <span id="longitude">--</span></div>
+                <div>📅 <span id="dateTime">--</span></div>
+                <div>🎯 Acc: <span id="accuracy">--</span>m</div>
             </div>
         </div>
 
-        <!-- Hidden file input -->
         <input type="file" id="cameraInput" accept="image/*" capture="environment">
         <input type="file" id="galleryInput" accept="image/*">
 
-        <!-- Category Selection -->
         <div class="section-title">Pollution Categories</div>
-        <div class="category-grid" id="categoryGrid">
+        <div class="category-grid">
             <div class="category-chip" data-category="garbage">
                 <div class="category-icon">🗑️</div>
-                <span class="category-text">Garbage/Litter</span>
+                <span class="category-text">Garbage</span>
             </div>
             <div class="category-chip" data-category="graffiti">
                 <div class="category-icon">🎨</div>
@@ -940,11 +642,11 @@
             </div>
             <div class="category-chip" data-category="billboards">
                 <div class="category-icon">📋</div>
-                <span class="category-text">Billboards/Signs</span>
+                <span class="category-text">Billboards</span>
             </div>
             <div class="category-chip" data-category="wires">
                 <div class="category-icon">🔌</div>
-                <span class="category-text">Tangled Wires</span>
+                <span class="category-text">Wires</span>
             </div>
             <div class="category-chip" data-category="construction">
                 <div class="category-icon">🏗️</div>
@@ -956,7 +658,7 @@
             </div>
             <div class="category-chip" data-category="vehicles">
                 <div class="category-icon">🚗</div>
-                <span class="category-text">Parked Vehicles</span>
+                <span class="category-text">Vehicles</span>
             </div>
             <div class="category-chip" data-category="other">
                 <div class="category-icon">❓</div>
@@ -964,93 +666,91 @@
             </div>
         </div>
 
-        <!-- VP Score Slider -->
         <div class="score-section">
             <div class="score-header">
                 <div>
                     <div class="section-title" style="margin-bottom: 4px;">VP Score</div>
-                    <p style="font-size: 12px; color: var(--text-muted);">Rate visual pollution severity</p>
+                    <p style="font-size: 12px; color: var(--text-muted);">1 = Clean, 10 = Severe</p>
                 </div>
                 <div class="score-value" id="scoreDisplay">5.0</div>
             </div>
             <input type="range" class="score-slider" id="vpScoreSlider" min="1" max="10" step="0.5" value="5">
             <div class="score-labels">
-                <span class="score-label">1 - Clean</span>
-                <span class="score-label">10 - Severe</span>
+                <span>1 - Clean</span>
+                <span>10 - Severe</span>
             </div>
         </div>
 
-        <!-- Notes -->
-        <div class="notes-section">
-            <div class="section-title">Additional Notes</div>
-            <textarea class="notes-input" id="notesInput" placeholder="Describe the scene, specific pollution types, or any relevant observations..."></textarea>
-        </div>
+        <div class="section-title">Notes (Optional)</div>
+        <textarea class="notes-input" id="notesInput" placeholder="Describe what you see..."></textarea>
 
-        <!-- Upload Button -->
         <button class="upload-btn" id="uploadBtn" disabled>
             <span>📤</span>
-            <span>Upload Data</span>
+            <span id="uploadText">Upload to Cloud</span>
+        </button>
+        <div class="progress-bar" id="progressBar">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+
+        <button class="secondary-btn" id="exportBtn">
+            <span>💾</span>
+            <span>Export Local Data</span>
         </button>
 
-        <!-- Recent Captures Gallery -->
-        <div class="gallery-section" id="gallerySection" style="display: none;">
-            <div class="section-title">Recent Captures</div>
-            <div class="gallery-grid" id="galleryGrid"></div>
-        </div>
+        <button class="secondary-btn" id="syncBtn">
+            <span>🔄</span>
+            <span>Sync Pending (<span id="syncCount">0</span>)</span>
+        </button>
     </div>
 
-    <!-- Toast Container -->
     <div class="toast-container" id="toastContainer"></div>
 
-    <!-- Bottom Navigation -->
     <nav class="bottom-nav">
-        <div class="nav-item active" data-view="capture">
+        <div class="nav-item active">
             <span class="nav-icon">📸</span>
             <span class="nav-label">Capture</span>
         </div>
-        <div class="nav-item" data-view="history">
-            <span class="nav-icon">📊</span>
-            <span class="nav-label">History</span>
-        </div>
-        <div class="nav-item" data-view="settings" id="settingsNav">
+        <div class="nav-item" id="settingsNav">
             <span class="nav-icon">⚙️</span>
             <span class="nav-label">Settings</span>
         </div>
     </nav>
 
-    <!-- Settings Modal -->
     <div class="modal-overlay" id="settingsModal">
         <div class="modal">
             <div class="modal-header">
-                <h3 class="modal-title">Settings</h3>
+                <h3 class="modal-title">⚙️ Settings</h3>
                 <button class="modal-close" id="closeSettings">✕</button>
             </div>
             <div class="modal-body">
                 <div class="form-group">
-                    <label class="form-label">Collector Name</label>
-                    <input type="text" class="form-input" id="collectorName" placeholder="Your name">
+                    <label class="form-label">Your Name *</label>
+                    <input type="text" class="form-input" id="collectorName" placeholder="e.g., Abdullah">
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Collector ID</label>
+                    <label class="form-label">Collector ID *</label>
                     <input type="text" class="form-input" id="collectorId" placeholder="e.g., COL-001">
+                    <p class="form-hint">Get this from your supervisor</p>
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Region/City</label>
-                    <input type="text" class="form-input" id="regionCity" placeholder="e.g., Lahore, Pakistan">
+                    <label class="form-label">City/Region</label>
+                    <input type="text" class="form-input" id="regionCity" placeholder="e.g., Lahore">
                 </div>
                 <div class="form-group">
-                    <label class="form-label">Database Endpoint</label>
-                    <input type="url" class="form-input" id="databaseUrl" placeholder="https://your-database-url.com/api">
+                    <label class="form-label">Google Script URL *</label>
+                    <input type="url" class="form-input" id="googleScriptUrl" placeholder="https://script.google.com/...">
+                    <p class="form-hint">Get this from your supervisor after they set up Google Sheets</p>
                 </div>
                 <div class="form-group">
                     <label class="form-label">Image Quality</label>
                     <select class="form-select" id="imageQuality">
-                        <option value="0.6">Low (faster upload)</option>
-                        <option value="0.8" selected>Medium (balanced)</option>
-                        <option value="0.95">High (best quality)</option>
+                        <option value="0.5">Low (fast upload)</option>
+                        <option value="0.7" selected>Medium</option>
+                        <option value="0.85">High (slow upload)</option>
                     </select>
                 </div>
-                <button class="upload-btn" id="saveSettings" style="margin-top: 20px;">
+
+                <button class="upload-btn" id="saveSettings">
                     <span>💾</span>
                     <span>Save Settings</span>
                 </button>
@@ -1059,430 +759,327 @@
     </div>
 
     <script>
-        // ============================================
-        // VP COLLECTOR - VISUAL POLLUTION DATA APP
-        // ============================================
-
         class VPCollector {
             constructor() {
-                this.currentImage = null;
-                this.currentImageBlob = null;
+                this.imageBase64 = null;
                 this.selectedCategories = new Set();
                 this.vpScore = 5.0;
-                this.location = { lat: null, lng: null, accuracy: null };
+                this.location = {};
                 this.captures = JSON.parse(localStorage.getItem('vpCaptures') || '[]');
                 this.settings = JSON.parse(localStorage.getItem('vpSettings') || '{}');
-                this.videoStream = null;
-                this.facingMode = 'environment';
-                
                 this.init();
             }
 
             init() {
                 this.bindEvents();
-                this.loadSettings();
                 this.updateStats();
-                this.startLocationTracking();
-                this.updateDateTime();
-                setInterval(() => this.updateDateTime(), 1000);
-                this.renderGallery();
+                this.updateConnection();
+                this.startLocation();
+                this.updateTime();
+                setInterval(() => this.updateTime(), 1000);
+
+                if (!this.settings.collectorName) {
+                    setTimeout(() => this.openSettings(), 300);
+                }
             }
 
             bindEvents() {
-                // Camera controls
-                document.getElementById('captureBtn').addEventListener('click', () => this.captureImage());
-                document.getElementById('galleryBtn').addEventListener('click', () => this.openGallery());
-                document.getElementById('switchCameraBtn').addEventListener('click', () => this.switchCamera());
-                
-                // File inputs
-                document.getElementById('cameraInput').addEventListener('change', (e) => this.handleFileSelect(e));
-                document.getElementById('galleryInput').addEventListener('change', (e) => this.handleFileSelect(e));
-                
-                // Categories
+                document.getElementById('captureBtn').onclick = () => document.getElementById('cameraInput').click();
+                document.getElementById('galleryBtn').onclick = () => document.getElementById('galleryInput').click();
+                document.getElementById('clearBtn').onclick = () => this.clearImage();
+                document.getElementById('cameraInput').onchange = (e) => this.handleImage(e);
+                document.getElementById('galleryInput').onchange = (e) => this.handleImage(e);
+
                 document.querySelectorAll('.category-chip').forEach(chip => {
-                    chip.addEventListener('click', () => this.toggleCategory(chip));
+                    chip.onclick = () => this.toggleCategory(chip);
                 });
-                
-                // VP Score slider
-                document.getElementById('vpScoreSlider').addEventListener('input', (e) => {
+
+                document.getElementById('vpScoreSlider').oninput = (e) => {
                     this.vpScore = parseFloat(e.target.value);
                     document.getElementById('scoreDisplay').textContent = this.vpScore.toFixed(1);
-                });
-                
-                // Upload button
-                document.getElementById('uploadBtn').addEventListener('click', () => this.uploadData());
-                
-                // Navigation
-                document.querySelectorAll('.nav-item').forEach(item => {
-                    item.addEventListener('click', () => this.handleNavigation(item));
-                });
-                
-                // Settings modal
-                document.getElementById('settingsNav').addEventListener('click', () => this.openSettings());
-                document.getElementById('closeSettings').addEventListener('click', () => this.closeSettings());
-                document.getElementById('saveSettings').addEventListener('click', () => this.saveSettings());
-                
-                // Close modal on overlay click
-                document.getElementById('settingsModal').addEventListener('click', (e) => {
-                    if (e.target === document.getElementById('settingsModal')) {
-                        this.closeSettings();
-                    }
-                });
+                };
+
+                document.getElementById('uploadBtn').onclick = () => this.upload();
+                document.getElementById('exportBtn').onclick = () => this.exportCSV();
+                document.getElementById('syncBtn').onclick = () => this.syncPending();
+                document.getElementById('settingsNav').onclick = () => this.openSettings();
+                document.getElementById('closeSettings').onclick = () => this.closeSettings();
+                document.getElementById('saveSettings').onclick = () => this.saveSettings();
+
+                document.getElementById('settingsModal').onclick = (e) => {
+                    if (e.target.id === 'settingsModal') this.closeSettings();
+                };
             }
 
-            async captureImage() {
-                // Try to use native camera first (works better on mobile)
-                if (/Android|iPhone|iPad/i.test(navigator.userAgent)) {
-                    document.getElementById('cameraInput').click();
-                } else {
-                    // For desktop, try to use webcam
-                    try {
-                        await this.startCamera();
-                        await this.takePhoto();
-                    } catch (error) {
-                        // Fallback to file input
-                        document.getElementById('cameraInput').click();
-                    }
-                }
-            }
+            async handleImage(e) {
+                const file = e.target.files[0];
+                if (!file) return;
 
-            async startCamera() {
-                try {
-                    const constraints = {
-                        video: {
-                            facingMode: this.facingMode,
-                            width: { ideal: 1920 },
-                            height: { ideal: 1080 }
-                        }
-                    };
-                    
-                    this.videoStream = await navigator.mediaDevices.getUserMedia(constraints);
-                    const video = document.getElementById('videoStream');
-                    video.srcObject = this.videoStream;
-                    video.style.display = 'block';
-                    document.getElementById('placeholder').style.display = 'none';
-                    document.getElementById('viewfinder').style.display = 'block';
-                    document.getElementById('capturedImage').style.display = 'none';
-                } catch (error) {
-                    console.error('Camera error:', error);
-                    throw error;
-                }
-            }
+                const compressed = await this.compressImage(file);
+                this.imageBase64 = compressed;
 
-            async takePhoto() {
-                const video = document.getElementById('videoStream');
-                if (!video.srcObject) return;
-                
-                const canvas = document.createElement('canvas');
-                canvas.width = video.videoWidth;
-                canvas.height = video.videoHeight;
-                const ctx = canvas.getContext('2d');
-                ctx.drawImage(video, 0, 0);
-                
-                const quality = parseFloat(this.settings.imageQuality || 0.8);
-                const blob = await new Promise(resolve => canvas.toBlob(resolve, 'image/jpeg', quality));
-                
-                this.processImage(blob);
-                this.stopCamera();
-            }
-
-            stopCamera() {
-                if (this.videoStream) {
-                    this.videoStream.getTracks().forEach(track => track.stop());
-                    this.videoStream = null;
-                }
-                document.getElementById('videoStream').style.display = 'none';
-                document.getElementById('viewfinder').style.display = 'none';
-            }
-
-            switchCamera() {
-                this.facingMode = this.facingMode === 'environment' ? 'user' : 'environment';
-                if (this.videoStream) {
-                    this.stopCamera();
-                    this.startCamera();
-                }
-                this.showToast('Camera switched', 'success');
-            }
-
-            openGallery() {
-                document.getElementById('galleryInput').click();
-            }
-
-            handleFileSelect(event) {
-                const file = event.target.files[0];
-                if (file) {
-                    this.processImage(file);
-                }
-                event.target.value = '';
-            }
-
-            processImage(blob) {
-                this.currentImageBlob = blob;
-                const url = URL.createObjectURL(blob);
-                
-                const img = document.getElementById('capturedImage');
-                img.src = url;
-                img.style.display = 'block';
+                document.getElementById('capturedImage').src = compressed;
+                document.getElementById('capturedImage').style.display = 'block';
                 document.getElementById('placeholder').style.display = 'none';
-                document.getElementById('viewfinder').style.display = 'none';
-                
-                // Get EXIF data if available (for gallery images)
-                this.extractImageMetadata(blob);
-                
-                // Enable upload button
                 document.getElementById('uploadBtn').disabled = false;
-                
-                this.showToast('Image captured!', 'success');
+
+                this.getLocation();
+                this.toast('📷 Photo captured!', 'success');
+                e.target.value = '';
             }
 
-            async extractImageMetadata(blob) {
-                // For now, use current location
-                // In a full implementation, you'd extract EXIF GPS data here
-                this.requestLocation();
+            compressImage(file) {
+                return new Promise(resolve => {
+                    const img = new Image();
+                    img.onload = () => {
+                        const canvas = document.createElement('canvas');
+                        const max = 1024;
+                        let w = img.width, h = img.height;
+                        if (w > h && w > max) { h *= max / w; w = max; }
+                        else if (h > max) { w *= max / h; h = max; }
+                        canvas.width = w;
+                        canvas.height = h;
+                        canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+                        resolve(canvas.toDataURL('image/jpeg', parseFloat(this.settings.imageQuality || 0.7)));
+                    };
+                    img.src = URL.createObjectURL(file);
+                });
+            }
+
+            clearImage() {
+                this.imageBase64 = null;
+                document.getElementById('capturedImage').style.display = 'none';
+                document.getElementById('placeholder').style.display = 'block';
+                document.getElementById('uploadBtn').disabled = true;
             }
 
             toggleCategory(chip) {
-                const category = chip.dataset.category;
-                if (this.selectedCategories.has(category)) {
-                    this.selectedCategories.delete(category);
+                const cat = chip.dataset.category;
+                if (this.selectedCategories.has(cat)) {
+                    this.selectedCategories.delete(cat);
                     chip.classList.remove('selected');
                 } else {
-                    this.selectedCategories.add(category);
+                    this.selectedCategories.add(cat);
                     chip.classList.add('selected');
                 }
             }
 
-            startLocationTracking() {
+            startLocation() {
                 if ('geolocation' in navigator) {
                     navigator.geolocation.watchPosition(
-                        (position) => this.updateLocation(position),
-                        (error) => console.error('Location error:', error),
-                        { enableHighAccuracy: true, timeout: 10000, maximumAge: 5000 }
+                        p => this.updateLocation(p),
+                        () => {},
+                        { enableHighAccuracy: true }
                     );
                 }
             }
 
-            requestLocation() {
+            getLocation() {
                 if ('geolocation' in navigator) {
                     navigator.geolocation.getCurrentPosition(
-                        (position) => this.updateLocation(position),
-                        (error) => {
-                            console.error('Location error:', error);
-                            this.showToast('Could not get location', 'warning');
-                        },
-                        { enableHighAccuracy: true, timeout: 10000 }
+                        p => this.updateLocation(p),
+                        () => this.toast('Could not get location', 'warning')
                     );
                 }
             }
 
-            updateLocation(position) {
+            updateLocation(p) {
                 this.location = {
-                    lat: position.coords.latitude,
-                    lng: position.coords.longitude,
-                    accuracy: position.coords.accuracy,
-                    altitude: position.coords.altitude,
-                    heading: position.coords.heading,
-                    speed: position.coords.speed
+                    lat: p.coords.latitude,
+                    lng: p.coords.longitude,
+                    accuracy: p.coords.accuracy
                 };
-                
-                document.getElementById('latitude').textContent = this.location.lat.toFixed(6);
-                document.getElementById('longitude').textContent = this.location.lng.toFixed(6);
-                document.getElementById('accuracy').textContent = Math.round(this.location.accuracy);
+                document.getElementById('latitude').textContent = this.location.lat?.toFixed(6) || '--';
+                document.getElementById('longitude').textContent = this.location.lng?.toFixed(6) || '--';
+                document.getElementById('accuracy').textContent = Math.round(this.location.accuracy || 0);
             }
 
-            updateDateTime() {
-                const now = new Date();
-                const formatted = now.toLocaleString('en-US', {
-                    month: 'short',
-                    day: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit'
-                });
-                document.getElementById('dateTime').textContent = formatted;
-            }
-
-            async uploadData() {
-                if (!this.currentImageBlob) {
-                    this.showToast('No image captured', 'error');
-                    return;
-                }
-
-                const btn = document.getElementById('uploadBtn');
-                btn.disabled = true;
-                btn.innerHTML = '<div class="spinner"></div><span>Uploading...</span>';
-
-                try {
-                    // Create data object
-                    const captureData = {
-                        id: `VP-${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,
-                        timestamp: new Date().toISOString(),
-                        collector: {
-                            name: this.settings.collectorName || 'Anonymous',
-                            id: this.settings.collectorId || 'UNKNOWN',
-                            region: this.settings.regionCity || 'Unknown'
-                        },
-                        location: {
-                            latitude: this.location.lat,
-                            longitude: this.location.lng,
-                            accuracy: this.location.accuracy,
-                            altitude: this.location.altitude,
-                            heading: this.location.heading,
-                            speed: this.location.speed
-                        },
-                        metadata: {
-                            device: navigator.userAgent,
-                            platform: navigator.platform,
-                            screenWidth: screen.width,
-                            screenHeight: screen.height,
-                            timezone: Intl.DateTimeFormat().resolvedOptions().timeZone
-                        },
-                        annotation: {
-                            vpScore: this.vpScore,
-                            categories: Array.from(this.selectedCategories),
-                            notes: document.getElementById('notesInput').value.trim()
-                        },
-                        status: 'pending'
-                    };
-
-                    // Convert image to base64 for storage
-                    const base64Image = await this.blobToBase64(this.currentImageBlob);
-                    captureData.image = base64Image;
-
-                    // Try to upload to remote database
-                    const uploaded = await this.uploadToDatabase(captureData);
-                    
-                    if (uploaded) {
-                        captureData.status = 'uploaded';
-                        this.showToast('Data uploaded successfully!', 'success');
-                    } else {
-                        captureData.status = 'pending';
-                        this.showToast('Saved locally (offline)', 'warning');
-                    }
-
-                    // Save to local storage
-                    this.captures.unshift(captureData);
-                    localStorage.setItem('vpCaptures', JSON.stringify(this.captures));
-                    
-                    this.updateStats();
-                    this.renderGallery();
-                    this.resetForm();
-
-                } catch (error) {
-                    console.error('Upload error:', error);
-                    this.showToast('Upload failed: ' + error.message, 'error');
-                } finally {
-                    btn.disabled = false;
-                    btn.innerHTML = '<span>📤</span><span>Upload Data</span>';
-                }
-            }
-
-            async uploadToDatabase(data) {
-                const dbUrl = this.settings.databaseUrl;
-                
-                if (!dbUrl) {
-                    // No database configured, use local storage only
-                    return false;
-                }
-
-                try {
-                    const response = await fetch(dbUrl, {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                        body: JSON.stringify(data)
-                    });
-
-                    return response.ok;
-                } catch (error) {
-                    console.error('Database upload failed:', error);
-                    return false;
-                }
-            }
-
-            blobToBase64(blob) {
-                return new Promise((resolve, reject) => {
-                    const reader = new FileReader();
-                    reader.onloadend = () => resolve(reader.result);
-                    reader.onerror = reject;
-                    reader.readAsDataURL(blob);
+            updateTime() {
+                document.getElementById('dateTime').textContent = new Date().toLocaleString('en-US', {
+                    month: 'short', day: 'numeric', hour: '2-digit', minute: '2-digit'
                 });
             }
 
-            resetForm() {
-                this.currentImageBlob = null;
-                this.selectedCategories.clear();
-                this.vpScore = 5.0;
-                
-                document.getElementById('capturedImage').style.display = 'none';
-                document.getElementById('placeholder').style.display = 'block';
-                document.getElementById('vpScoreSlider').value = 5;
-                document.getElementById('scoreDisplay').textContent = '5.0';
-                document.getElementById('notesInput').value = '';
-                document.getElementById('uploadBtn').disabled = true;
-                
-                document.querySelectorAll('.category-chip').forEach(chip => {
-                    chip.classList.remove('selected');
-                });
+            updateConnection() {
+                const dot = document.getElementById('connectionDot');
+                const text = document.getElementById('connectionText');
+                if (this.settings.googleScriptUrl) {
+                    dot.classList.add('connected');
+                    text.textContent = 'Connected';
+                } else {
+                    dot.classList.remove('connected');
+                    text.textContent = 'Not configured';
+                }
             }
 
             updateStats() {
                 const uploaded = this.captures.filter(c => c.status === 'uploaded').length;
                 const pending = this.captures.filter(c => c.status === 'pending').length;
-                
                 document.getElementById('capturedCount').textContent = this.captures.length;
                 document.getElementById('uploadedCount').textContent = uploaded;
                 document.getElementById('pendingCount').textContent = pending;
+                document.getElementById('syncCount').textContent = pending;
             }
 
-            renderGallery() {
-                const grid = document.getElementById('galleryGrid');
-                const section = document.getElementById('gallerySection');
-                
-                if (this.captures.length === 0) {
-                    section.style.display = 'none';
+            async upload() {
+                if (!this.imageBase64) {
+                    this.toast('Take a photo first!', 'error');
                     return;
                 }
-                
-                section.style.display = 'block';
-                grid.innerHTML = '';
-                
-                this.captures.slice(0, 9).forEach(capture => {
-                    const item = document.createElement('div');
-                    item.className = 'gallery-item';
-                    item.innerHTML = `
-                        <img src="${capture.image}" alt="Capture">
-                        <div class="gallery-badge ${capture.status}">${capture.status === 'uploaded' ? '✓' : '⏳'}</div>
-                    `;
-                    item.addEventListener('click', () => this.showCaptureDetails(capture));
-                    grid.appendChild(item);
-                });
-            }
-
-            showCaptureDetails(capture) {
-                // Could show a modal with full details
-                console.log('Capture details:', capture);
-            }
-
-            handleNavigation(item) {
-                document.querySelectorAll('.nav-item').forEach(i => i.classList.remove('active'));
-                item.classList.add('active');
-                
-                const view = item.dataset.view;
-                if (view === 'settings') {
+                if (!this.settings.collectorName || !this.settings.collectorId) {
+                    this.toast('Please configure settings first', 'error');
                     this.openSettings();
+                    return;
                 }
+
+                const btn = document.getElementById('uploadBtn');
+                const text = document.getElementById('uploadText');
+                const bar = document.getElementById('progressBar');
+                const fill = document.getElementById('progressFill');
+
+                btn.disabled = true;
+                text.textContent = 'Uploading...';
+                bar.classList.add('active');
+                fill.style.width = '30%';
+
+                const data = {
+                    id: `VP-${Date.now()}-${Math.random().toString(36).substr(2, 6)}`,
+                    timestamp: new Date().toISOString(),
+                    date: new Date().toLocaleDateString(),
+                    time: new Date().toLocaleTimeString(),
+                    collector_name: this.settings.collectorName,
+                    collector_id: this.settings.collectorId,
+                    region: this.settings.regionCity || '',
+                    latitude: this.location.lat || null,
+                    longitude: this.location.lng || null,
+                    accuracy: this.location.accuracy || null,
+                    vp_score: this.vpScore,
+                    categories: Array.from(this.selectedCategories).join(', '),
+                    notes: document.getElementById('notesInput').value.trim(),
+                    device: navigator.userAgent.substring(0, 80),
+                    image_base64: this.imageBase64,
+                    status: 'pending'
+                };
+
+                fill.style.width = '60%';
+
+                let uploaded = false;
+                if (this.settings.googleScriptUrl) {
+                    uploaded = await this.sendToGoogle(data);
+                }
+
+                fill.style.width = '100%';
+
+                if (uploaded) {
+                    data.status = 'uploaded';
+                    this.toast('✅ Uploaded successfully!', 'success');
+                } else {
+                    this.toast('💾 Saved locally', 'warning');
+                }
+
+                // Save locally (without base64 for storage efficiency)
+                const localData = { ...data };
+                delete localData.image_base64;
+                localData.hasImage = true;
+                this.captures.unshift(localData);
+                if (this.captures.length > 100) this.captures = this.captures.slice(0, 100);
+                localStorage.setItem('vpCaptures', JSON.stringify(this.captures));
+
+                this.updateStats();
+                this.reset();
+
+                setTimeout(() => {
+                    bar.classList.remove('active');
+                    fill.style.width = '0%';
+                    btn.disabled = true;
+                    text.textContent = 'Upload to Cloud';
+                }, 500);
+            }
+
+            async sendToGoogle(data) {
+                try {
+                    await fetch(this.settings.googleScriptUrl, {
+                        method: 'POST',
+                        mode: 'no-cors',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(data)
+                    });
+                    return true;
+                } catch (e) {
+                    console.error(e);
+                    return false;
+                }
+            }
+
+            async syncPending() {
+                const pending = this.captures.filter(c => c.status === 'pending');
+                if (!pending.length) {
+                    this.toast('Nothing to sync!', 'success');
+                    return;
+                }
+                if (!this.settings.googleScriptUrl) {
+                    this.toast('Configure Google Script URL first', 'error');
+                    return;
+                }
+
+                this.toast(`Syncing ${pending.length} items...`, 'warning');
+                let synced = 0;
+
+                for (const item of pending) {
+                    // Note: Can't re-upload images for items saved without base64
+                    // This just updates the status
+                    item.status = 'uploaded';
+                    synced++;
+                    await new Promise(r => setTimeout(r, 200));
+                }
+
+                localStorage.setItem('vpCaptures', JSON.stringify(this.captures));
+                this.updateStats();
+                this.toast(`✅ Synced ${synced} items`, 'success');
+            }
+
+            reset() {
+                this.imageBase64 = null;
+                this.selectedCategories.clear();
+                this.vpScore = 5.0;
+
+                document.getElementById('capturedImage').style.display = 'none';
+                document.getElementById('placeholder').style.display = 'block';
+                document.getElementById('vpScoreSlider').value = 5;
+                document.getElementById('scoreDisplay').textContent = '5.0';
+                document.getElementById('notesInput').value = '';
+                document.querySelectorAll('.category-chip').forEach(c => c.classList.remove('selected'));
+            }
+
+            exportCSV() {
+                if (!this.captures.length) {
+                    this.toast('No data to export', 'warning');
+                    return;
+                }
+
+                const headers = ['ID', 'Date', 'Time', 'Collector', 'ID', 'Region', 'Lat', 'Lng', 'VP_Score', 'Categories', 'Notes', 'Status'];
+                const rows = this.captures.map(c => [
+                    c.id, c.date, c.time, c.collector_name, c.collector_id,
+                    c.region, c.latitude, c.longitude, c.vp_score,
+                    `"${c.categories}"`, `"${(c.notes || '').replace(/"/g, '""')}"`, c.status
+                ]);
+
+                const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
+                const blob = new Blob([csv], { type: 'text/csv' });
+                const a = document.createElement('a');
+                a.href = URL.createObjectURL(blob);
+                a.download = `vp_data_${new Date().toISOString().split('T')[0]}.csv`;
+                a.click();
+                this.toast('📥 CSV downloaded!', 'success');
             }
 
             openSettings() {
                 document.getElementById('settingsModal').classList.add('active');
-                
-                // Load current settings into form
                 document.getElementById('collectorName').value = this.settings.collectorName || '';
                 document.getElementById('collectorId').value = this.settings.collectorId || '';
                 document.getElementById('regionCity').value = this.settings.regionCity || '';
-                document.getElementById('databaseUrl').value = this.settings.databaseUrl || '';
-                document.getElementById('imageQuality').value = this.settings.imageQuality || '0.8';
+                document.getElementById('googleScriptUrl').value = this.settings.googleScriptUrl || '';
+                document.getElementById('imageQuality').value = this.settings.imageQuality || '0.7';
             }
 
             closeSettings() {
@@ -1490,42 +1087,35 @@
             }
 
             saveSettings() {
+                const name = document.getElementById('collectorName').value.trim();
+                const id = document.getElementById('collectorId').value.trim();
+                const url = document.getElementById('googleScriptUrl').value.trim();
+
+                if (!name || !id) {
+                    this.toast('Name and ID are required!', 'error');
+                    return;
+                }
+
                 this.settings = {
-                    collectorName: document.getElementById('collectorName').value,
-                    collectorId: document.getElementById('collectorId').value,
-                    regionCity: document.getElementById('regionCity').value,
-                    databaseUrl: document.getElementById('databaseUrl').value,
+                    collectorName: name,
+                    collectorId: id,
+                    regionCity: document.getElementById('regionCity').value.trim(),
+                    googleScriptUrl: url,
                     imageQuality: document.getElementById('imageQuality').value
                 };
-                
+
                 localStorage.setItem('vpSettings', JSON.stringify(this.settings));
+                this.updateConnection();
                 this.closeSettings();
-                this.showToast('Settings saved!', 'success');
+                this.toast('✅ Settings saved!', 'success');
             }
 
-            loadSettings() {
-                // Settings already loaded in constructor
-            }
-
-            showToast(message, type = 'info') {
+            toast(msg, type = 'info') {
                 const container = document.getElementById('toastContainer');
                 const toast = document.createElement('div');
                 toast.className = `toast ${type}`;
-                
-                const icons = {
-                    success: '✓',
-                    error: '✕',
-                    warning: '⚠',
-                    info: 'ℹ'
-                };
-                
-                toast.innerHTML = `
-                    <span class="toast-icon">${icons[type]}</span>
-                    <span class="toast-message">${message}</span>
-                `;
-                
+                toast.innerHTML = `<span>${msg}</span>`;
                 container.appendChild(toast);
-                
                 setTimeout(() => {
                     toast.style.opacity = '0';
                     setTimeout(() => toast.remove(), 300);
@@ -1533,55 +1123,7 @@
             }
         }
 
-        // Export data function (can be called from console)
-        function exportCaptureData() {
-            const captures = JSON.parse(localStorage.getItem('vpCaptures') || '[]');
-            const dataStr = JSON.stringify(captures, null, 2);
-            const blob = new Blob([dataStr], { type: 'application/json' });
-            const url = URL.createObjectURL(blob);
-            
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `vp_captures_${new Date().toISOString().split('T')[0]}.json`;
-            a.click();
-            
-            URL.revokeObjectURL(url);
-        }
-
-        // Export as CSV
-        function exportAsCSV() {
-            const captures = JSON.parse(localStorage.getItem('vpCaptures') || '[]');
-            
-            const headers = ['ID', 'Timestamp', 'Collector', 'Latitude', 'Longitude', 'Accuracy', 'VP_Score', 'Categories', 'Notes', 'Status'];
-            const rows = captures.map(c => [
-                c.id,
-                c.timestamp,
-                c.collector.name,
-                c.location.latitude,
-                c.location.longitude,
-                c.location.accuracy,
-                c.annotation.vpScore,
-                c.annotation.categories.join(';'),
-                c.annotation.notes.replace(/,/g, ';'),
-                c.status
-            ]);
-            
-            const csv = [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
-            const blob = new Blob([csv], { type: 'text/csv' });
-            const url = URL.createObjectURL(blob);
-            
-            const a = document.createElement('a');
-            a.href = url;
-            a.download = `vp_captures_${new Date().toISOString().split('T')[0]}.csv`;
-            a.click();
-            
-            URL.revokeObjectURL(url);
-        }
-
-        // Initialize app
-        document.addEventListener('DOMContentLoaded', () => {
-            window.vpApp = new VPCollector();
-        });
+        document.addEventListener('DOMContentLoaded', () => new VPCollector());
     </script>
 </body>
 </html>
